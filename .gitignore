@@ -1,0 +1,14 @@
+# Folders
+/vendor/
+/.phpunit.cache
+/.fleet
+/.idea
+/.vscode
+/.qodo
+
+# Files
+.env
+.phpunit.result.cache
+.php-cs-fixer.cache
+auth.json
+
