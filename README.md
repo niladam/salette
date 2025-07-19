@@ -49,5 +49,3 @@ $data = $response->json();
 - [All Contributors](https://github.com/Sammyjo20/Saloon/contributors)
 - [Madalin Tache](https://github.com/niladam)
 - [Catalin Pruna](https://github.com/PrunaCatalin)
-
-And a special thanks to [Caneco](https://twitter.com/caneco) for the logo ✨
