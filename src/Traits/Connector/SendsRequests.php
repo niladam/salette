@@ -7,8 +7,12 @@ namespace Salette\Traits\Connector;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\Utils;
 use LogicException;
+use Salette\Exceptions\DuplicatePipeNameException;
 use Salette\Exceptions\FatalRequestException;
 use Salette\Exceptions\RequestException;
+use Salette\Http\Connector;
+use Salette\Http\Faking\MockClient;
+use Salette\Http\Pool;
 use Salette\Http\Response;
 use Salette\Requests\PendingRequest;
 use Salette\Requests\Request;
@@ -18,7 +22,7 @@ trait SendsRequests
 {
     use HasSender;
 
-    public function send(Request $request, ?callable $handleRetry = null): Response
+    public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
         if (is_null($handleRetry)) {
             $handleRetry = static fn (): bool => true;
@@ -45,7 +49,7 @@ trait SendsRequests
             }
 
             try {
-                $pendingRequest = $this->createPendingRequest($request);
+                $pendingRequest = $this->createPendingRequest($request, $mockClient);
 
                 $response = $this->sender()->send($pendingRequest);
 
@@ -91,12 +95,12 @@ trait SendsRequests
     /**
      * Send a request asynchronously
      */
-    public function sendAsync(Request $request): PromiseInterface
+    public function sendAsync(Request $request, ?MockClient $mockClient = null): PromiseInterface
     {
         $sender = $this->sender();
 
-        return Utils::task(function () use ($request, $sender) {
-            $pendingRequest = $this->createPendingRequest($request)->setAsynchronous(true);
+        return Utils::task(function () use ($mockClient, $request, $sender) {
+            $pendingRequest = $this->createPendingRequest($request, $mockClient)->setAsynchronous(true);
             $requestPromise = $sender->sendAsync($pendingRequest);
 
             $requestPromise->then(
@@ -123,6 +127,7 @@ trait SendsRequests
         int $interval = 0,
         ?callable $handleRetry = null,
         bool $throw = true,
+        ?MockClient $mockClient = null,
         bool $useExponentialBackoff = false
     ): Response {
         $request->tries = $tries;
@@ -130,14 +135,33 @@ trait SendsRequests
         $request->throwOnMaxTries = $throw;
         $request->useExponentialBackoff = $useExponentialBackoff;
 
-        return $this->send($request, $handleRetry);
+        return $this->send($request, $mockClient, $handleRetry);
     }
 
     /**
      * Create a new PendingRequest
+     *
+     * @throws DuplicatePipeNameException
      */
-    public function createPendingRequest(Request $request): PendingRequest
+    public function createPendingRequest(Request $request, ?MockClient $mockClient = null): PendingRequest
     {
-        return new PendingRequest($this, $request);
+        return new PendingRequest($this, $request, $mockClient);
+    }
+
+    /**
+     * Create a request pool
+     *
+     * @param  iterable<PromiseInterface|Request>|callable(Connector): iterable<PromiseInterface|Request>  $requests
+     * @param  int|callable(int $pendingRequests): (int)  $concurrency
+     * @param  callable(Response, array-key $key, PromiseInterface $poolAggregate): (void)|null  $responseHandler
+     * @param  callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)|null  $exceptionHandler
+     */
+    public function pool(
+        $requests = [],
+        $concurrency = 5,
+        ?callable $responseHandler = null,
+        ?callable $exceptionHandler = null
+    ): Pool {
+        return new Pool($this, $requests, $concurrency, $responseHandler, $exceptionHandler);
     }
 }

@@ -12,6 +12,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Salette\Contracts\ArrayStore as ArrayStoreContract;
+use Salette\Contracts\DataObjects\WithResponse;
+use Salette\Contracts\FakeResponse;
 use Salette\Exceptions\SaletteException;
 use Salette\Helpers\ArrayHelpers;
 use Salette\Helpers\ObjectHelpers;
@@ -67,9 +69,19 @@ class Response
     protected string $decodedXml;
 
     /**
+     * Denotes if the response has been mocked.
+     */
+    protected bool $mocked = false;
+
+    /**
      * Denotes if the response has been cached.
      */
     protected bool $cached = false;
+
+    /**
+     * The simulated response payload if the response was simulated.
+     */
+    protected ?FakeResponse $fakeResponse = null;
 
     /**
      * Create a new response instance.
@@ -249,7 +261,7 @@ class Response
             $this->decodedJsonObject = json_decode($this->body() ?: '{}', false, 512, JSON_THROW_ON_ERROR);
         }
 
-        if ($key === null) {
+        if (is_null($key)) {
             return $this->decodedJsonObject;
         }
 
@@ -287,6 +299,8 @@ class Response
      * @see https://github.com/saloonphp/xml-wrangler
      *
      * @todo investigate and implement xml-wrangler from saloon
+     *
+     * @throws SaletteException
      */
     public function xmlReader()
     {
@@ -334,7 +348,13 @@ class Response
         $request = $this->pendingRequest->getRequest();
         $connector = $this->pendingRequest->getConnector();
 
-        return $request->createDtoFromResponse($this) ?? $connector->createDtoFromResponse($this);
+        $dataObject = $request->createDtoFromResponse($this) ?? $connector->createDtoFromResponse($this);
+
+        if ($dataObject instanceof WithResponse) {
+            $dataObject->setResponse($this);
+        }
+
+        return $dataObject;
     }
 
     /**
@@ -355,6 +375,27 @@ class Response
         }
 
         return $this->dto();
+    }
+
+    /**
+     * Parse the HTML or XML body into a Symfony DomCrawler instance.
+     *
+     * Requires Symfony Crawler (composer require symfony/dom-crawler)
+     *
+     * @see https://symfony.com/doc/current/components/dom_crawler.html
+     *
+     * @throws SaletteException
+     */
+    public function dom()
+    {
+        if (! class_exists('Symfony\Component\DomCrawler\Crawler')) {
+            throw new SaletteException(
+                'You are missing the Symfony\Component\DomCrawler\Crawler class.'
+                . 'You can install it by running composer require symfony/dom-crawler.'
+            );
+        }
+
+        return new Crawler($this->body());
     }
 
     /**
@@ -537,13 +578,29 @@ class Response
     {
         $contentType = $this->header('Content-Type');
 
-        if ($contentType === null) {
+        if (is_null($contentType)) {
             return false;
         }
 
         $contentType = is_array($contentType) ? $contentType[0] : $contentType;
 
         return strpos($contentType, 'json') !== false;
+    }
+
+    /**
+     * Determine if the response is in XML format.
+     */
+    public function isXml(): bool
+    {
+        $contentType = $this->header('Content-Type');
+
+        if (is_null($contentType)) {
+            return false;
+        }
+
+        $contentType = is_array($contentType) ? $contentType[0] : $contentType;
+
+        return strpos($contentType, 'xml') !== false;
     }
 
     /**
@@ -570,9 +627,8 @@ class Response
      * Save the body to a file.
      *
      * @param  string|resource  $resourceOrPath
-     * @param  bool  $closeResource
      */
-    public function saveBodyToFile($resourceOrPath, $closeResource = true): void
+    public function saveBodyToFile($resourceOrPath, bool $closeResource = true): void
     {
         if (! is_string($resourceOrPath) && ! is_resource($resourceOrPath)) {
             throw new InvalidArgumentException(
@@ -608,7 +664,7 @@ class Response
      *
      * @return $this
      */
-    public function close()
+    public function close(): self
     {
         $this->stream()->close();
 
@@ -617,10 +673,8 @@ class Response
 
     /**
      * Get the body of the response.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->body();
     }
@@ -634,15 +688,63 @@ class Response
     }
 
     /**
+     * Check if the response has been mocked
+     */
+    public function isMocked(): bool
+    {
+        return $this->mocked;
+    }
+
+    /**
+     * Check if the response has been simulated
+     */
+    public function isFaked(): bool
+    {
+        return $this->isMocked() || $this->isCached();
+    }
+
+    /**
      * Set if a response has been cached or not.
      *
      * @param  bool  $value
      * @return $this
      */
-    public function setCached($value)
+    public function setCached($value): self
     {
         $this->cached = true;
 
         return $this;
+    }
+
+    /**
+     * Set if a response has been mocked or not.
+     *
+     * @return $this
+     */
+    public function setMocked(bool $value): self
+    {
+        $this->mocked = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the simulated response payload if the response was simulated.
+     *
+     * @return $this
+     */
+    public function setFakeResponse(FakeResponse $fakeResponse): self
+    {
+        $this->fakeResponse = $fakeResponse;
+
+        return $this;
+    }
+
+    /**
+     * Get the simulated response payload if the response was simulated.
+     */
+    public function getFakeResponse(): ?FakeResponse
+    {
+        return $this->fakeResponse;
     }
 }
