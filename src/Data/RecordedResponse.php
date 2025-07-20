@@ -10,7 +10,7 @@ use Salette\Http\Response;
 
 class RecordedResponse implements JsonSerializable
 {
-    protected int $statusCode;
+    public int $statusCode;
 
     public array $headers;
 
