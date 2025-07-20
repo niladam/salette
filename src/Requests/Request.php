@@ -40,7 +40,7 @@ abstract class Request
      */
     public function getMethod(): string
     {
-        Method::validate(self::METHOD);
+        Method::validate(static::METHOD);
 
         return static::METHOD;
     }

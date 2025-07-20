@@ -11,6 +11,8 @@ class TestConnector extends Connector
 {
     use AcceptsJson;
 
+    public ?string $url = null;
+
     public bool $unique = false;
 
     /**

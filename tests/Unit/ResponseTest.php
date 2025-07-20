@@ -26,8 +26,10 @@ test('you can get the original pending request', function () {
 
     $pendingRequest = $response->getPendingRequest();
 
-    expect($pendingRequest)->toBeInstanceOf(PendingRequest::class);
-    expect($pendingRequest->getRequest())->toBeInstanceOf(UserRequest::class);
+    expect($pendingRequest)
+        ->toBeInstanceOf(PendingRequest::class)
+        ->and($pendingRequest->getRequest())
+        ->toBeInstanceOf(UserRequest::class);
 });
 
 test('you can get the connector', function () {
@@ -162,13 +164,13 @@ test('the collect method will return a collection', function () {
     $response = connector()->send(new UserRequest(), $mockClient);
     $collection = $response->collect();
 
-    expect($collection)->toBeInstanceOf(Collection::class);
-    expect($collection)->toHaveCount(2);
-    expect($collection['name'])->toEqual('Sam');
-    expect($collection['work'])->toEqual('Codepotato');
-
-    expect($response->collect('name'))->toArray()->toEqual(['Sam']);
-    expect($response->collect('age'))->toBeEmpty();
+    expect($collection)
+        ->toBeInstanceOf(Collection::class)
+        ->and($collection)->toHaveCount(2)
+        ->and($collection['name'])->toEqual('Sam')
+        ->and($collection['work'])->toEqual('Codepotato')
+        ->and($response->collect('name'))->toArray()->toEqual(['Sam'])
+        ->and($response->collect('age'))->toBeEmpty();
 });
 
 test('the json method will return empty array if body is empty', function () {
@@ -198,8 +200,9 @@ test('you can get an individual header from the response', function () {
 
     $response = connector()->send(new UserRequest(), $mockClient);
 
-    expect($response)->header('X-Greeting')->toEqual('Howdy');
-    expect($response)->header('X-Missing')->toBeEmpty();
+    expect($response)
+        ->header('X-Greeting')->toEqual('Howdy')
+        ->and($response)->header('X-Missing')->toBeEmpty();
 });
 
 test('it will convert the body to string if the cast is used', function () {
@@ -241,11 +244,12 @@ test('it checks statuses correctly', function () {
 
     $responseC = connector()->send(new UserRequest(), $mockClient);
 
-    expect($responseC)->successful()->toBeFalse();
-    expect($responseC)->ok()->toBeFalse();
-    expect($responseC)->redirect()->toBeTrue();
-    expect($responseC)->failed()->toBeFalse();
-    expect($responseC)->serverError()->toBeFalse();
+    expect($responseC)
+        ->successful()->toBeFalse()
+        ->and($responseC)->ok()->toBeFalse()
+        ->and($responseC)->redirect()->toBeTrue()
+        ->and($responseC)->failed()->toBeFalse()
+        ->and($responseC)->serverError()->toBeFalse();
 });
 
 test('the xml method will return xml as an array', function () {
@@ -300,11 +304,11 @@ test(
 
         $response = connector()->send(new UserRequest(), $mockClient);
 
-        expect($response->headers()->get('X-Greeting'))->toEqual('Howdy');
-        expect($response->headers()->get('X-Farewell'))->toEqual(['Goodbye', 'Sam']);
-
-        expect($response->header('X-Greeting'))->toEqual('Howdy');
-        expect($response->header('X-Farewell'))->toEqual(['Goodbye', 'Sam']);
+        expect($response->headers()->get('X-Greeting'))
+            ->toEqual('Howdy')
+            ->and($response->headers()->get('X-Farewell'))->toEqual(['Goodbye', 'Sam'])
+            ->and($response->header('X-Greeting'))->toEqual('Howdy')
+            ->and($response->header('X-Farewell'))->toEqual(['Goodbye', 'Sam']);
     }
 );
 
@@ -317,8 +321,9 @@ test('the dom method will return a crawler instance', function () {
 
     $response = connector()->send(new UserRequest(), $mockClient);
 
-    expect($response->dom())->toBeInstanceOf(Crawler::class);
-    expect($response->dom())->toEqual(new Crawler($dom));
+    expect($response->dom())
+        ->toBeInstanceOf(Crawler::class)
+        ->and($response->dom())->toEqual(new Crawler($dom));
 });
 
 test('when using the body methods the stream is rewound back to the start', function () {

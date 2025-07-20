@@ -26,7 +26,7 @@ test(
     'the response will return different exceptions based on status',
     function (int $status, string $expectedException) {
         $mockClient = new MockClient([
-        MockResponse::make(['message' => 'Oh yee-naw!'], $status),
+            MockResponse::make(['message' => 'Oh yee-naw!'], $status),
         ]);
 
         $response = TestConnector::make()->send(new UserRequest(), $mockClient);
@@ -34,8 +34,9 @@ test(
 
         $message = sprintf('%s (%s) Response: %s', StatusCodeHelper::getMessage($status), $status, $response->body());
 
-        expect($exception)->toBeInstanceOf($expectedException);
-        expect($exception->getMessage())->toEqual($message);
+        expect($exception)
+            ->toBeInstanceOf($expectedException)
+            ->and($exception->getMessage())->toEqual($message);
     }
 )->with([
     [401, UnauthorizedException::class],

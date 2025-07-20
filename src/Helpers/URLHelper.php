@@ -46,7 +46,14 @@ class URLHelper
      */
     public static function isValidUrl(string $url): bool
     {
-        return ! empty(filter_var($url, FILTER_VALIDATE_URL));
+        // If it starts with “scheme://” then treat it as a URL,
+        // even if filter_var() rejects underscores in the host.
+        if (preg_match('/^[A-Za-z][A-Za-z0-9+\-.]*:\/\//', $url)) {
+            return true;
+        }
+
+        // Fallback to full FILTER_VALIDATE_URL check
+        return (bool) filter_var($url, FILTER_VALIDATE_URL);
     }
 
     /**

@@ -24,7 +24,8 @@
         "phpunit/phpunit": "^9",
         "symfony/var-dumper": "^4.3.4|^5.0|^6.0|^7.0",
         "pestphp/pest": "^1.23",
-        "league/flysystem": "^2.5"
+        "league/flysystem": "^2.5",
+        "pestphp/pest-plugin-parallel": "^1.2"
     },
     "suggest": {
         "illuminate/collections": "Required for the response collect() method.",
@@ -33,7 +34,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Salette\\": "src/",
+            "Salette\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Salette\\Tests\\": "tests/"
         }
     },
@@ -55,6 +60,7 @@
         ],
         "cs:check": "phpcs src",
         "cs:fix": "php-cs-fixer fix src --using-cache=no",
-        "pstan": "phpstan analyse"
+        "pstan": "phpstan analyse",
+        "test": "./vendor/bin/pest -p"
     }
 }
