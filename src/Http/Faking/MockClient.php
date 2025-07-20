@@ -12,6 +12,7 @@ use Salette\Http\Connector;
 use Salette\Http\Response;
 use Salette\Requests\PendingRequest;
 use Salette\Requests\Request;
+use Salette\Support\Helpers;
 
 class MockClient
 {
@@ -107,6 +108,14 @@ class MockClient
     public function getNextFromSequence()
     {
         return array_shift($this->sequenceResponses);
+    }
+
+    /**
+     * Peek at the next response in the sequence without consuming it
+     */
+    public function peekNextFromSequence()
+    {
+        return reset($this->sequenceResponses);
     }
 
     /**

@@ -28,7 +28,7 @@ class User
     /**
      * @return static
      */
-    public function fromSaloon(Response $response): self
+    public static function fromSalette(Response $response): self
     {
         $data = $response->json();
 

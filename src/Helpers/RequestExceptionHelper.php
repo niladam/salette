@@ -12,6 +12,7 @@ use Salette\Exceptions\Statuses\GatewayTimeoutException;
 use Salette\Exceptions\Statuses\InternalServerErrorException;
 use Salette\Exceptions\Statuses\MethodNotAllowedException;
 use Salette\Exceptions\Statuses\NotFoundException;
+use Salette\Exceptions\Statuses\PaymentRequiredException;
 use Salette\Exceptions\Statuses\RequestTimeOutException;
 use Salette\Exceptions\Statuses\ServiceUnavailableException;
 use Salette\Exceptions\Statuses\TooManyRequestsException;
@@ -29,6 +30,7 @@ class RequestExceptionHelper
      */
     protected static array $map = [
         401 => UnauthorizedException::class,
+        402 => PaymentRequiredException::class,
         403 => ForbiddenException::class,
         404 => NotFoundException::class,
         405 => MethodNotAllowedException::class,

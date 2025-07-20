@@ -21,7 +21,7 @@ class ApiResponse
     /**
      * @return static
      */
-    public function fromSaloon(Response $response)
+    public static function fromSalette(Response $response)
     {
         return new static($response->json());
     }

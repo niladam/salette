@@ -1,0 +1,22 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sun, 20 Jul 2025 20:01:21 GMT",
+        "Content-Type": "text\/xml; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "cloudflare",
+        "Cache-Control": "no-cache, private",
+        "Access-Control-Allow-Origin": "*",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Xss-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Cf-Cache-Status": "DYNAMIC",
+        "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https:\/\/a.nel.cloudflare.com\/report\/v4?s=I5USCA1seUuzaSxd8w%2FDjPU67gIvslxax2gRKx%2F6bP9euKGfbfggiovL%2BKFgll9UmdDyOj8LIo18p5JKtwRwfR6cPIjKl5PH%2FmMgYcMU\"}]}",
+        "CF-RAY": "96250ccebb5bb69a-OTP",
+        "alt-svc": "h3=\":443\"; ma=86400"
+    },
+    "data": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<breakfast_menu name=\"Big G's Breakfasts\">\n    <food soldOut=\"false\" bestSeller=\"true\">\n        <name>Belgian Waffles<\/name>\n        <price>$5.95<\/price>\n        <description>Two of our famous Belgian Waffles with plenty of real maple syrup<\/description>\n        <calories>650<\/calories>\n    <\/food>\n    <food soldOut=\"false\" bestSeller=\"false\">\n        <name>Strawberry Belgian Waffles<\/name>\n        <price>$7.95<\/price>\n        <description>Light Belgian waffles covered with strawberries and whipped cream<\/description>\n        <calories>900<\/calories>\n    <\/food>\n    <food soldOut=\"false\" bestSeller=\"true\">\n        <name>Berry-Berry Belgian Waffles<\/name>\n        <price>$8.95<\/price>\n        <description>Light Belgian waffles covered with an assortment of fresh berries and whipped cream<\/description>\n        <calories>900<\/calories>\n    <\/food>\n    <food soldOut=\"true\" bestSeller=\"false\">\n        <name>French Toast<\/name>\n        <price>$4.50<\/price>\n        <description>Thick slices made from our homemade sourdough bread<\/description>\n        <calories>600<\/calories>\n    <\/food>\n    <food soldOut=\"false\" bestSeller=\"false\">\n        <name>Homestyle Breakfast<\/name>\n        <price>$6.95<\/price>\n        <description>Two eggs, bacon or sausage, toast, and our ever-popular hash browns<\/description>\n        <calories>950<\/calories>\n    <\/food>\n<\/breakfast_menu>\n",
+    "context": []
+}

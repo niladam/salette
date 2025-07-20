@@ -36,6 +36,6 @@ class DtoConnector extends Connector
      */
     public function createDtoFromResponse(Response $response)
     {
-        return ApiResponse::fromSaloon($response);
+        return ApiResponse::fromSalette($response);
     }
 }

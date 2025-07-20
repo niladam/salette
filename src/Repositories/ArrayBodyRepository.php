@@ -96,7 +96,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
      * @param  array-key|null  $key
      * @return ($key is null ? array<array-key, mixed> : mixed)
      */
-    public function get($key = null, $default = null): self
+    public function get($key = null, $default = null)
     {
         if (is_null($key)) {
             return $this->all();

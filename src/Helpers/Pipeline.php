@@ -27,6 +27,7 @@ class Pipeline
     {
         $pipe = new Pipe($callable, $name, $order);
 
+        // Only check for duplicate names if a name is provided
         if (is_string($name) && $this->pipeExists($name)) {
             throw new DuplicatePipeNameException($name);
         }

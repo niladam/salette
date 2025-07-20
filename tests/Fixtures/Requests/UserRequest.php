@@ -14,6 +14,9 @@ class UserRequest extends Request
      */
     public const METHOD = Method::GET;
 
+    public $userId;
+    public $groupId;
+
     /**
      * Define the endpoint for the request.
      */
@@ -24,6 +27,7 @@ class UserRequest extends Request
 
     public function __construct($userId = null, $groupId = null)
     {
-        //
+        $this->userId = $userId;
+        $this->groupId = $groupId;
     }
 }

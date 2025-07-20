@@ -21,6 +21,7 @@ use Throwable;
 trait SendsRequests
 {
     use HasSender;
+    use ManagesFakeResponses;
 
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
@@ -51,7 +52,12 @@ trait SendsRequests
             try {
                 $pendingRequest = $this->createPendingRequest($request, $mockClient);
 
-                $response = $this->sender()->send($pendingRequest);
+                // Check if we should use a fake response
+                if ($pendingRequest->hasFakeResponse()) {
+                    $response = $this->createFakeResponse($pendingRequest);
+                } else {
+                    $response = $this->sender()->send($pendingRequest);
+                }
 
                 $response = $pendingRequest->executeResponsePipeline($response);
 

@@ -117,8 +117,8 @@ class Pool
             $requestsIterable = $requests;
 
             $requests = function () use ($requestsIterable) {
-                foreach ($requestsIterable as $item) {
-                    yield $item;
+                foreach ($requestsIterable as $key => $item) {
+                    yield $key => $item;
                 }
             };
         }

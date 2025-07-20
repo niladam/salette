@@ -12,14 +12,14 @@ interface BodyRepository
     /**
      * Set the raw data in the repository.
      *
-     * @param  array<array-key, mixed>  $value
+     * @param  array<array-key, mixed>|mixed  $value
      */
-    public function set(array $value): self;
+    public function set($value): self;
 
     /**
      * Get the raw data in the repository.
      *
-     * @return array<array-key, mixed>
+     * @return array<array-key, mixed>|mixed
      */
     public function all();
 

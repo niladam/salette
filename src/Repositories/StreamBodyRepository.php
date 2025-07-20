@@ -51,7 +51,7 @@ class StreamBodyRepository implements BodyRepository
     /**
      * Retrieve the stream from the repository
      */
-    public function all(): array
+    public function all()
     {
         return $this->stream;
     }

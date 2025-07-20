@@ -61,10 +61,7 @@ test('it will throw an exception if the sender does not implement the sender int
     $connector = new ArraySenderConnector();
     $connector->setDefaultSender(UserRequest::class);
 
-    $this->expectException(TypeError::class);
-    $this->expectExceptionMessage(
-        'Return value must be of type Salette\Contracts\Sender, Salette\Tests\Fixtures\Requests\UserRequest returned'
-    );
-
     $connector->sender();
-});
+})->throws(TypeError::class, 'Return value must be of type Salette\Contracts\Sender, Salette\Tests\Fixtures\Requests\UserRequest returned');
+
+

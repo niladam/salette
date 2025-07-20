@@ -72,8 +72,9 @@ test('an asynchronous request will return a custom response', function () {
 
     $connector = new TestConnector();
     $request = new UserRequestWithCustomResponse();
+    $request->withMockClient($mockClient);
 
-    $promise = $connector->sendAsync($request, $mockClient);
+    $promise = $connector->sendAsync($request);
 
     $response = $promise->wait();
 

@@ -62,8 +62,25 @@ function getCustomVarDump($output)
 
         $var = $cloner->cloneVar($var);
 
-        if (null !== $label) {
-            $var = $var->withContext(['label' => $label]);
+        // Check if this is a debug call by looking at the backtrace
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        $isDebugCall = false;
+        $debugType = null;
+
+        foreach ($backtrace as $trace) {
+            if (isset($trace['class']) && $trace['class'] === 'Salette\Helpers\Debugger') {
+                $isDebugCall = true;
+                if (strpos($trace['function'], 'Request') !== false) {
+                    $debugType = 'Request';
+                } elseif (strpos($trace['function'], 'Response') !== false) {
+                    $debugType = 'Response';
+                }
+                break;
+            }
+        }
+
+        if ($isDebugCall && $debugType) {
+            fwrite($output, "Saloon {$debugType} (UserRequest) -> ");
         }
 
         $dumper->dump($var, $output);

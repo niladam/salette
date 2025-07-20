@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Salette\Traits\Connector;
 
+use Salette\Config;
 use Salette\Contracts\Sender;
 use Salette\Senders\GuzzleSender;
 
@@ -34,8 +35,6 @@ trait HasSender
      */
     protected function defaultSender(): Sender
     {
-        $class = $this->defaultSender ?: GuzzleSender::class;
-
-        return new $class();
+        return Config::getDefaultSender();
     }
 }

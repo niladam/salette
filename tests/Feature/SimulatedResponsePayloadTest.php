@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Salette\Http\Faking\FakeResponse;
 use Salette\Http\Faking\MockClient;
 use Salette\Http\Faking\MockResponse;
+use Salette\Requests\PendingRequest;
 use Salette\Tests\Fixtures\Connectors\TestConnector;
 use Salette\Tests\Fixtures\Requests\UserRequest;
 
@@ -16,7 +17,7 @@ test('if a simulated response payload was provided before mock response it will 
     $fakeResponse = new FakeResponse(['name' => 'Gareth'], 201, ['X-Greeting' => 'Hello']);
 
     $request = new UserRequest();
-    $request->middleware()->onRequest(fn () => $fakeResponse);
+    $request->middleware()->onRequest(fn (PendingRequest $pendingRequest) => $pendingRequest->setFakeResponse($fakeResponse));
 
     $response = TestConnector::make()->send($request, $mockClient);
 
