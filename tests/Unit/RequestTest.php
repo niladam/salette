@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Salette\Exceptions\InvalidHttpMethod;
 use Salette\Exceptions\InvalidResponseClassException;
 use Salette\Exceptions\NoMockResponseFoundException;
 use Salette\Http\Faking\MockClient;
@@ -130,6 +131,6 @@ test('it throws an exception if you forget to add a method', function () {
 
     $connector->send($request);
 })->throws(
-    LogicException::class,
-    'Your request is missing a HTTP method. You must add a method property like [ public const METHOD = Method::GET]'
+    InvalidHttpMethod::class,
+    'Your request is missing a HTTP method. Please define a property like [ public const METHOD = Method::GET; ]'
 );

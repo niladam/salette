@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Salette\Tests\Fixtures\Senders;
 
+use Salette\Http\Response;
 use GuzzleHttp\Psr7\HttpFactory;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Salette\Contracts\Sender;
 use Salette\Data\FactoryCollection;
@@ -32,9 +34,9 @@ class ArraySender implements Sender
     /**
      * Send the request synchronously
      */
-    public function send(PendingRequest $pendingRequest): \Salette\Http\Response
+    public function send(PendingRequest $pendingRequest): Response
     {
-        /** @var class-string<\Salette\Http\Response> $responseClass */
+        /** @var class-string<Response> $responseClass */
         $responseClass = $pendingRequest->getResponseClass();
 
         return $responseClass::fromPsrResponse(
@@ -51,7 +53,7 @@ class ArraySender implements Sender
     /**
      * Send the request asynchronously
      */
-    public function sendAsync(PendingRequest $pendingRequest): \GuzzleHttp\Promise\PromiseInterface
+    public function sendAsync(PendingRequest $pendingRequest): PromiseInterface
     {
         //
     }

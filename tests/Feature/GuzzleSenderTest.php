@@ -22,7 +22,7 @@ test('the guzzle sender will send to the right url using the correct method', fu
 
     $sender->addMiddleware(function (callable $handler) use ($pendingRequest) {
         return function (RequestInterface $request, array $options) use ($pendingRequest) {
-            expect($request->getMethod())->toEqual($pendingRequest->getMethod()->value);
+            expect($request->getMethod())->toEqual($pendingRequest->getMethod());
 
             $uri = $request->getUri();
             $saloonUri = new Uri($pendingRequest->getUrl());

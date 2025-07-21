@@ -19,7 +19,7 @@ class ArrayHelpers
      *
      * @phpstan-assert-if-true array<array-key, mixed>|ArrayAccess<array-key, mixed> $value
      *
-     * @param  mixed  $value
+     * @param mixed $value
      */
     private static function accessible($value): bool
     {
@@ -29,8 +29,8 @@ class ArrayHelpers
     /**
      * Determine if the given key exists in the provided array.
      *
-     * @param  array<array-key, mixed>|ArrayAccess<array-key, mixed>  $array
-     * @param  string|int|float  $key
+     * @param array<array-key, mixed>|ArrayAccess<array-key, mixed> $array
+     * @param string|int|float                                      $key
      */
     private static function exists($array, $key): bool
     {
@@ -48,9 +48,9 @@ class ArrayHelpers
     /**
      * Get an item from an array using "dot" notation.
      *
-     * @param  array<array-key, mixed>  $array
-     * @param  string|int|null  $key
-     * @param  mixed  $default
+     * @param  array<array-key, mixed> $array
+     * @param  string|int|null         $key
+     * @param  mixed                   $default
      * @return mixed
      */
     public static function get(array $array, $key, $default = null)
@@ -83,9 +83,9 @@ class ArrayHelpers
      *
      * If no key is given to the method, the entire array will be replaced.
      *
-     * @param  array<array-key, mixed>  &$array
-     * @param  string|int|null  $key
-     * @param  mixed  $value
+     * @param  array<array-key, mixed> &$array
+     * @param  string|int|null         $key
+     * @param  mixed                   $value
      * @return array<array-key, mixed>
      */
     public static function set(array &$array, $key, $value)
@@ -105,8 +105,11 @@ class ArrayHelpers
 
             unset($keys[$i]);
 
-            if (! isset($array[$segment]) || ! is_array($array[$segment])) {
+            if (! isset($array[$segment])) {
                 $array[$segment] = [];
+            } elseif (! is_array($array[$segment])) {
+                // If the item exists but is not an array, convert it to an array
+                $array[$segment] = (array) $array[$segment];
             }
 
             $array = &$array[$segment];

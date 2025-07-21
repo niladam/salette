@@ -37,7 +37,7 @@ trait AuthorizationCodeGrant
     /**
      * Get the Authorization URL.
      *
-     * @param  array<string>  $scopes
+     * @param array<string> $scopes
      */
     public function getAuthorizationUrl(
         array $scopes = [],
@@ -55,14 +55,24 @@ trait AuthorizationCodeGrant
 
         $this->state = $state ?? StringHelpers::random(32);
 
-        $queryParameters = array_filter([
+        $mergedScopes = array_filter(array_merge($defaultScopes, $scopes));
+        $scopeValue = implode($scopeSeparator, $mergedScopes);
+
+        $queryParameters = [
             'response_type' => 'code',
-            'scope' => implode($scopeSeparator, array_filter(array_merge($defaultScopes, $scopes))),
-            'client_id' => $clientId,
-            'redirect_uri' => $redirectUri,
-            'state' => $this->state,
-            ...$additionalQueryParameters,
-        ]);
+        ];
+
+        if (! empty($scopeValue)) {
+            $queryParameters['scope'] = $scopeValue;
+        }
+
+        $queryParameters = array_merge(
+            $queryParameters, [
+                'client_id' => $clientId,
+                'redirect_uri' => $redirectUri,
+                'state' => $this->state,
+            ], $additionalQueryParameters
+        );
 
         $query = http_build_query($queryParameters, '', '&', PHP_QUERY_RFC3986);
         $query = trim($query, '?&');
@@ -79,7 +89,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param  callable(TRequest): (void)|null  $requestModifier
+     * @param  callable(TRequest): (void)|null $requestModifier
      * @return ($returnResponse is true ? Response : OAuthAuthenticator)
      *
      * @throws InvalidStateException
@@ -125,7 +135,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param  callable(TRequest): (void)|null  $requestModifier
+     * @param  callable(TRequest): (void)|null $requestModifier
      * @return ($returnResponse is true ? Response : OAuthAuthenticator)
      *
      * @throws \Throwable
@@ -207,7 +217,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param  callable(TRequest): (void)|null  $requestModifier
+     * @param callable(TRequest): (void)|null $requestModifier
      */
     public function getUser(OAuthAuthenticator $oauthAuthenticator, ?callable $requestModifier = null): Response
     {

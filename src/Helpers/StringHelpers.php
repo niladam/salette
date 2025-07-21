@@ -14,7 +14,7 @@ class StringHelpers
     /**
      * Determine if a given string matches a given pattern.
      *
-     * @param  string|iterable<string>  $pattern
+     * @param string|iterable<string> $pattern
      */
     public static function matchesPattern($pattern, string $value): bool
     {
@@ -69,7 +69,9 @@ class StringHelpers
         while (mb_strlen($string) < $length) {
             $remaining = $length - mb_strlen($string);
 
-            /** @var positive-int $remaining */
+            /**
+             * @var positive-int $remaining
+             */
             $bytes = random_bytes($remaining);
 
             $string .= mb_substr(

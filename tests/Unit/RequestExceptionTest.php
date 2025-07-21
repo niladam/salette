@@ -29,7 +29,8 @@ test(
             MockResponse::make(['message' => 'Oh yee-naw!'], $status),
         ]);
 
-        $response = TestConnector::make()->send(new UserRequest(), $mockClient);
+        $connector = TestConnector::make()->withMockClient($mockClient);
+        $response = $connector->send(new UserRequest());
         $exception = $response->toException();
 
         $message = sprintf('%s (%s) Response: %s', StatusCodeHelper::getMessage($status), $status, $response->body());
@@ -61,7 +62,8 @@ test(
             MockResponse::make(['message' => 'Oh yee-naw!'], $status),
         ]);
 
-        $response = TestConnector::make()->send(new AlwaysHasFailureRequest(), $mockClient);
+        $connector = TestConnector::make()->withMockClient($mockClient);
+        $response = $connector->send(new AlwaysHasFailureRequest());
         $exception = $response->toException();
 
         $message = sprintf('%s (%s) Response: %s', StatusCodeHelper::getMessage($status), $status, $response->body());

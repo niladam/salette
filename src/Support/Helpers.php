@@ -17,7 +17,7 @@ class Helpers
     /**
      * Recursively gather all traits used by a class and its parents.
      *
-     * @param  object|class-string  $class  An object instance or fully-qualified class name
+     * @param  object|class-string $class An object instance or fully-qualified class name
      * @return string[] List of trait FQCNs
      */
     public static function classUsesRecursive($class): array
@@ -37,7 +37,7 @@ class Helpers
     }
 
     /**
-     * @param  class-string  $trait  Fully-qualified trait name
+     * @param  class-string $trait Fully-qualified trait name
      * @return string[] List of trait FQCNs
      */
     public static function traitUsesRecursive(string $trait): array
@@ -54,8 +54,8 @@ class Helpers
     /**
      * If $value is a Closure, invoke it with $args; otherwise return it directly.
      *
-     * @param  mixed  $value
-     * @param  mixed  ...$args
+     * @param  mixed $value
+     * @param  mixed ...$args
      * @return mixed
      */
     public static function value($value, ...$args)
@@ -68,8 +68,8 @@ class Helpers
     /**
      * Determine whether $class is the same as or a subclass of $subclass.
      *
-     * @param  class-string  $class  Fully-qualified class name to test
-     * @param  class-string  $subclass  Fully-qualified parent or interface name
+     * @param class-string $class    Fully-qualified class name to test
+     * @param class-string $subclass Fully-qualified parent or interface name
      *
      * @throws ReflectionException
      */
@@ -86,8 +86,9 @@ class Helpers
      * If the given $resource (Connector or Request) has a static bootTraitName() method,
      * call it with the PendingRequest.
      *
-     * @param  Connector|Request  $resource
-     * @param  string  $trait  Fully-qualified trait name to “boot”
+     * @param Connector|Request $resource
+     * @param string            $trait    Fully-qualified trait name to
+     *                                    “boot”
      *
      * @throws ReflectionException|InvalidBootableTraitException
      */

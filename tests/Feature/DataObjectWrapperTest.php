@@ -10,7 +10,7 @@ use Salette\Tests\Fixtures\Requests\DTORequest;
 use Salette\Tests\Fixtures\Data\UserWithResponse;
 use Salette\Tests\Fixtures\Requests\DTOWithResponseRequest;
 
-test('if a dto does not implement the WithResponse interface and HasResponse trait Saloon will not add the original response', function () {
+test('if a dto does not implement the WithResponse interface and HasResponse trait Salette will not add the original response', function () {
     $mockClient = new MockClient([
         new MockResponse(['name' => 'Sammyjo20', 'actual_name' => 'Sam', 'twitter' => '@carre_sam']),
     ]);
@@ -23,12 +23,13 @@ test('if a dto does not implement the WithResponse interface and HasResponse tra
         ->and($dto)->not->toBeInstanceOf(WithResponse::class);
 });
 
-test('if a dto implements the WithResponse interface and HasResponse trait Saloon will add the original response', function () {
+test('if a dto implements the WithResponse interface and HasResponse trait Salette will add the original response', function () {
     $mockClient = new MockClient([
         new MockResponse(['name' => 'Sammyjo20', 'actual_name' => 'Sam', 'twitter' => '@carre_sam']),
     ]);
 
     $request = new DTOWithResponseRequest();
+
     $response = connector()->send($request, $mockClient);
 
     /** @var UserWithResponse $dto */

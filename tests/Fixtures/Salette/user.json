@@ -1,0 +1,23 @@
+{
+    "statusCode": 200,
+    "headers": {
+        "Date": "Sun, 20 Jul 2025 20:06:21 GMT",
+        "Content-Type": "application\/json",
+        "Transfer-Encoding": "chunked",
+        "Connection": "keep-alive",
+        "Server": "cloudflare",
+        "Vary": "Accept-Encoding",
+        "Cache-Control": "no-cache, private",
+        "Access-Control-Allow-Origin": "*",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-Xss-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https:\/\/a.nel.cloudflare.com\/report\/v4?s=GaQr8lyC2ThIdvmf%2FTpHOb69rNLh3%2BmDA%2Fl6CuVVvw7y63qPo7tm23O28KuAjZJ0NU0FKLb%2F3QSqYlMZ7XZuDq733rEOO9JwUZ91upkw\"}]}",
+        "Cf-Cache-Status": "DYNAMIC",
+        "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "CF-RAY": "96251421eb28c9f1-OTP",
+        "alt-svc": "h3=\":443\"; ma=86400"
+    },
+    "data": "{\"name\":\"Sammyjo20\",\"actual_name\":\"Sam\",\"twitter\":\"@carre_sam\"}",
+    "context": []
+}

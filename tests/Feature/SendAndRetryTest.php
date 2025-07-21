@@ -128,8 +128,8 @@ test('a failed request can have an interval with exponential backoff between eac
         new UserRequest(),
         4,
         1000,
-        0,
-        false,
+        null,
+        true,
         null,
         true
     );

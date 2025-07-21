@@ -16,7 +16,7 @@ interface ArrayStore
     /**
      * Retrieve a single item.
      *
-     * @param  mixed  $default
+     * @param  mixed $default
      * @return mixed
      */
     public function get(string $key, $default = null);
@@ -24,7 +24,7 @@ interface ArrayStore
     /**
      * Overwrite the entire repository's contents.
      *
-     * @param  array<string, mixed>  $data
+     * @param  array<string, mixed> $data
      * @return $this
      */
     public function set(array $data): self;
@@ -32,7 +32,7 @@ interface ArrayStore
     /**
      * Merge in other arrays.
      *
-     * @param  array<string, mixed>  ...$arrays
+     * @param  array<string, mixed> ...$arrays
      * @return $this
      */
     public function merge(array ...$arrays): self;
@@ -40,7 +40,7 @@ interface ArrayStore
     /**
      * Add an item to the repository.
      *
-     * @param  mixed  $value
+     * @param  mixed $value
      * @return $this
      */
     public function add(string $key, $value): self;

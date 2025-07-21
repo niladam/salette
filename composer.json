@@ -1,6 +1,7 @@
 {
     "name": "niladam/salette",
     "description": "🚀Easily build API integrations into your legacy application.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Madalin Tache",
@@ -17,20 +18,23 @@
         "guzzlehttp/guzzle": "^7.9"
     },
     "require-dev": {
+        "ext-xml": "*",
         "ergebnis/composer-normalize": "^2.47",
         "friendsofphp/php-cs-fixer": "^3.75",
-        "phpstan/phpstan": "^2.1",
-        "squizlabs/php_codesniffer": "^3.12",
-        "phpunit/phpunit": "^9",
-        "symfony/var-dumper": "^4.3.4|^5.0|^6.0|^7.0",
-        "pestphp/pest": "^1.23",
         "league/flysystem": "^2.5",
-        "pestphp/pest-plugin-parallel": "^1.2"
+        "pestphp/pest": "^1.23",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "^3.12",
+        "symfony/var-dumper": "^4.3.4 || ^5.0 || ^6.0 || ^7.0",
+        "illuminate/collections": "^8.83",
+        "symfony/dom-crawler": "^5.4"
     },
     "suggest": {
+        "ext-xml": "Used if you plan on using the xml handing",
         "illuminate/collections": "Required for the response collect() method.",
-        "illuminate/support": "Required for Laravel integration (auto-discovery of ServiceProvider)",
-        "ext-xml": "Used if you plan on using the xml handing"
+        "illuminate/support": "Required for Laravel integration (auto-discovery of ServiceProvider)"
     },
     "autoload": {
         "psr-4": {
@@ -42,15 +46,15 @@
             "Salette\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": []
-        }
-    },
     "config": {
         "allow-plugins": {
             "ergebnis/composer-normalize": true,
             "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": []
         }
     },
     "scripts": {

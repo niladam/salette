@@ -17,10 +17,12 @@ trait HasTimeout
      */
     public function bootHasTimeout(PendingRequest $pendingRequest): void
     {
-        $pendingRequest->config()->merge([
-            RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeout(),
-            RequestOptions::TIMEOUT => $this->getRequestTimeout(),
-        ]);
+        $pendingRequest->config()->merge(
+            [
+                RequestOptions::CONNECT_TIMEOUT => $this->getConnectTimeout(),
+                RequestOptions::TIMEOUT => $this->getRequestTimeout(),
+            ]
+        );
     }
 
     /**

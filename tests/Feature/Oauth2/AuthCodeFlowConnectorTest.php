@@ -82,8 +82,8 @@ test('additional query parameters can be added passed to the authorization url',
 
     $url = $connector->getAuthorizationUrl(
         ['scope-1', 'scope-2'],
-        null,
         'my-state',
+        ' ',
         ['another-param' => 'another-value', 'yee' => 'haw']
     );
 

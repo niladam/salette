@@ -12,6 +12,7 @@ use Salette\Http\Connector;
 use Salette\Http\Response;
 use Salette\Requests\PendingRequest;
 use Salette\Requests\Request;
+use Salette\Support\Helpers;
 
 class MockClient
 {
@@ -107,6 +108,14 @@ class MockClient
     public function getNextFromSequence()
     {
         return array_shift($this->sequenceResponses);
+    }
+
+    /**
+     * Peek at the next response in the sequence without consuming it
+     */
+    public function peekNextFromSequence()
+    {
+        return reset($this->sequenceResponses);
     }
 
     /**
@@ -248,7 +257,7 @@ class MockClient
     /**
      * Assert that given requests were sent in order
      *
-     * @param  array<\Closure|class-string<Request>|string>  $callbacks
+     * @param array<\Closure|class-string<Request>|string> $callbacks
      *
      * @throws \ReflectionException
      */
@@ -266,15 +275,17 @@ class MockClient
     /**
      * Assert JSON response data was received
      *
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      *
      * @deprecated This method will be removed in v4
      */
     public function assertSentJson(string $request, array $data): void
     {
-        $this->assertSent(function ($currentRequest, $currentResponse) use ($request, $data) {
-            return $currentRequest instanceof $request && $currentResponse->json() === $data;
-        });
+        $this->assertSent(
+            function ($currentRequest, $currentResponse) use ($request, $data) {
+                return $currentRequest instanceof $request && $currentResponse->json() === $data;
+            }
+        );
     }
 
     /**
@@ -506,9 +517,11 @@ class MockClient
      */
     private function getRequestSentCount(): array
     {
-        $requests = array_map(static function (Response $response) {
-            return get_class($response->getRequest());
-        }, $this->getRecordedResponses());
+        $requests = array_map(
+            static function (Response $response) {
+                return get_class($response->getRequest());
+            }, $this->getRecordedResponses()
+        );
 
         return array_count_values($requests);
     }

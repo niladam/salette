@@ -58,8 +58,8 @@ final class Method
     {
         if ($method === '') {
             throw new InvalidHttpMethod(
-                'Your request is missing a valid HTTP method. '
-                . 'Please define a public const METHOD = Method::POST;'
+                'Your request is missing a HTTP method. '
+                . 'Please define a property like [ public const METHOD = Method::GET; ]'
             );
         }
 

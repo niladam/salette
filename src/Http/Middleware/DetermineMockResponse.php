@@ -57,7 +57,7 @@ class DetermineMockResponse implements RequestMiddleware
                 ->onResponse(
                     new RecordFixture($mockObject, $mockClient),
                     'recordFixture',
-                    PipeOrder::FIRST
+                    PipeOrder::first()
                 );
         }
 

@@ -42,6 +42,6 @@ class DTORequest extends Request
      */
     public function createDtoFromResponse(Response $response)
     {
-        return User::fromSaloon($response);
+        return User::fromSalette($response);
     }
 }

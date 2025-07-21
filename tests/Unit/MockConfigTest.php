@@ -13,7 +13,7 @@ afterEach(function () {
 });
 
 test('you can change the default fixture path', function () {
-    expect(MockConfig::getFixturePath())->toEqual('tests/Fixtures/Saloon');
+    expect(MockConfig::getFixturePath())->toEqual('tests/Fixtures/Salette');
 
     MockConfig::setFixturePath('saloon-requests/responses');
 

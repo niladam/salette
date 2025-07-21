@@ -20,13 +20,13 @@ class Pipeline
     /**
      * Add a pipe to the pipeline.
      *
-     *
      * @throws DuplicatePipeNameException
      */
     public function pipe(callable $callable, ?string $name = null, ?PipeOrder $order = null): self
     {
         $pipe = new Pipe($callable, $name, $order);
 
+        // Only check for duplicate names if a name is provided
         if (is_string($name) && $this->pipeExists($name)) {
             throw new DuplicatePipeNameException($name);
         }
@@ -39,7 +39,7 @@ class Pipeline
     /**
      * Process the pipeline.
      *
-     * @param  mixed  $payload
+     * @param  mixed $payload
      * @return mixed
      */
     public function process($payload)
@@ -80,7 +80,7 @@ class Pipeline
     /**
      * Set the pipes on the pipeline.
      *
-     * @param  Pipe[]  $pipes
+     * @param Pipe[] $pipes
      *
      * @throws DuplicatePipeNameException
      */

@@ -23,6 +23,7 @@ use Salette\Requests\PendingRequest;
 use Salette\Requests\Request;
 use Salette\Traits\Macroable;
 use SimpleXMLElement;
+use Symfony\Component\DomCrawler\Crawler;
 use Throwable;
 
 class Response
@@ -187,9 +188,11 @@ class Response
      */
     public function headers()
     {
-        $headers = array_map(function (array $header) {
-            return count($header) === 1 ? $header[0] : $header;
-        }, $this->psrResponse->getHeaders());
+        $headers = array_map(
+            function (array $header) {
+                return count($header) === 1 ? $header[0] : $header;
+            }, $this->psrResponse->getHeaders()
+        );
 
         return new ArrayStore($headers);
     }
@@ -213,8 +216,8 @@ class Response
     /**
      * Get the JSON decoded body of the response as an array or scalar value.
      *
-     * @param  string|int|null  $key
-     * @param  mixed  $default
+     * @param  string|int|null $key
+     * @param  mixed           $default
      * @return mixed
      *
      * @throws \JsonException
@@ -235,8 +238,8 @@ class Response
     /**
      * Alias of json().
      *
-     * @param  string|int|null  $key
-     * @param  mixed  $default
+     * @param  string|int|null $key
+     * @param  mixed           $default
      * @return mixed
      *
      * @throws \JsonException
@@ -249,8 +252,8 @@ class Response
     /**
      * Get the JSON decoded body of the response as an object or scalar value.
      *
-     * @param  string|int|null  $key
-     * @param  mixed  $default
+     * @param  string|int|null $key
+     * @param  mixed           $default
      * @return mixed
      *
      * @throws \JsonException
@@ -293,24 +296,27 @@ class Response
     /**
      * Load the XML response into a reader
      *
-     * Suitable for reading large XML responses and supports a wider range of XML
-     * documents. Requires XML Wrangler (composer require saloonphp/xml-wrangler)
-     *
-     * @see https://github.com/saloonphp/xml-wrangler
-     *
-     * @todo investigate and implement xml-wrangler from saloon
+     * Suitable for reading XML responses using dot notation to access elements.
+     * Supports array-like access for multiple elements of the same type.
      *
      * @throws SaletteException
      */
     public function xmlReader()
     {
-        throw new SaletteException('xmlReader not implemented yet.');
+        if (! class_exists('SimpleXMLElement')) {
+            throw new SaletteException(
+                'You are missing the SimpleXMLElement class.'
+                . 'This is a core PHP extension that should be available.'
+            );
+        }
+
+        return new XmlReader($this->body());
     }
 
     /**
      * Get the JSON decoded body of the response as a collection.
      *
-     * @param  string|int|null  $key
+     * @param string|int|null $key
      *
      * @throws JsonException|SaletteException
      *
@@ -626,7 +632,7 @@ class Response
     /**
      * Save the body to a file.
      *
-     * @param  string|resource  $resourceOrPath
+     * @param string|resource $resourceOrPath
      */
     public function saveBodyToFile($resourceOrPath, bool $closeResource = true): void
     {
@@ -706,7 +712,7 @@ class Response
     /**
      * Set if a response has been cached or not.
      *
-     * @param  bool  $value
+     * @param  bool $value
      * @return $this
      */
     public function setCached($value): self

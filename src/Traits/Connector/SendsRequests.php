@@ -21,6 +21,7 @@ use Throwable;
 trait SendsRequests
 {
     use HasSender;
+    use ManagesFakeResponses;
 
     public function send(Request $request, ?MockClient $mockClient = null, ?callable $handleRetry = null): Response
     {
@@ -51,7 +52,12 @@ trait SendsRequests
             try {
                 $pendingRequest = $this->createPendingRequest($request, $mockClient);
 
-                $response = $this->sender()->send($pendingRequest);
+                // Check if we should use a fake response
+                if ($pendingRequest->hasFakeResponse()) {
+                    $response = $this->createFakeResponse($pendingRequest);
+                } else {
+                    $response = $this->sender()->send($pendingRequest);
+                }
 
                 $response = $pendingRequest->executeResponsePipeline($response);
 
@@ -99,22 +105,32 @@ trait SendsRequests
     {
         $sender = $this->sender();
 
-        return Utils::task(function () use ($mockClient, $request, $sender) {
-            $pendingRequest = $this->createPendingRequest($request, $mockClient)->setAsynchronous(true);
-            $requestPromise = $sender->sendAsync($pendingRequest);
+        return Utils::task(
+            function () use ($mockClient, $request, $sender) {
+                $pendingRequest = $this->createPendingRequest($request, $mockClient)->setAsynchronous(true);
 
-            $requestPromise->then(
-                fn (Response $response) => $pendingRequest->executeResponsePipeline($response)
-            );
+                // Check if we should use a fake response
+                if ($pendingRequest->hasFakeResponse()) {
+                    $response = $this->createFakeResponse($pendingRequest);
 
-            return $requestPromise;
-        });
+                    return $response->then(
+                        fn (Response $response) => $pendingRequest->executeResponsePipeline($response)
+                    );
+                }
+
+                $requestPromise = $sender->sendAsync($pendingRequest);
+
+                return $requestPromise->then(
+                    fn (Response $response) => $pendingRequest->executeResponsePipeline($response)
+                );
+            }
+        );
     }
 
     /**
      * Send a synchronous request and retry if it fails
      *
-     * @param  callable(Throwable,Request):bool|null  $handleRetry
+     * @param callable(Throwable,Request):bool|null $handleRetry
      *
      * @deprecated This will be removed in a future version.
      *
@@ -151,10 +167,10 @@ trait SendsRequests
     /**
      * Create a request pool
      *
-     * @param  iterable<PromiseInterface|Request>|callable(Connector): iterable<PromiseInterface|Request>  $requests
-     * @param  int|callable(int $pendingRequests): (int)  $concurrency
-     * @param  callable(Response, array-key $key, PromiseInterface $poolAggregate): (void)|null  $responseHandler
-     * @param  callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)|null  $exceptionHandler
+     * @param iterable<PromiseInterface|Request>|callable(Connector): iterable<PromiseInterface|Request> $requests
+     * @param int|callable(int                                                                           $pendingRequests): (int)  $concurrency
+     * @param callable(Response, array-key                                                               $key,              PromiseInterface $poolAggregate): (void)|null  $responseHandler
+     * @param callable(mixed                                                                             $reason,           array-key $key, PromiseInterface $poolAggregate): (void)|null  $exceptionHandler
      */
     public function pool(
         $requests = [],

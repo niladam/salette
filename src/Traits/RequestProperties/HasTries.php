@@ -49,7 +49,7 @@ trait HasTries
      * request before the next attempt is made.
      */
     /**
-     * @param  FatalRequestException|RequestException  $exception
+     * @param FatalRequestException|RequestException $exception
      */
     public function handleRetry($exception, Request $request): bool
     {

@@ -29,8 +29,10 @@ class RequestSelectionConnector extends Connector
         return [];
     }
 
+    public $apiKey;
+
     public function __construct($apiKey = null)
     {
-        //
+        $this->apiKey = $apiKey;
     }
 }

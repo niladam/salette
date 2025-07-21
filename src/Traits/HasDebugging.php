@@ -32,7 +32,8 @@ trait HasDebugging
                     Debugger::die();
                 }
             },
-            PipeOrder::LAST
+            null,
+            PipeOrder::last()
         );
 
         return $this;
@@ -59,7 +60,8 @@ trait HasDebugging
                     Debugger::die();
                 }
             },
-            PipeOrder::FIRST
+            null,
+            PipeOrder::first()
         );
 
         return $this;

@@ -6,12 +6,12 @@ namespace Salette\Tests\Fixtures\Responses;
 
 class UserData
 {
-    public string $foo;
+    public ?string $foo;
     /**
      * CustomResponse constructor.
      */
     public function __construct(
-        string $foo
+        ?string $foo
     ) {
         $this->foo = $foo;
     }

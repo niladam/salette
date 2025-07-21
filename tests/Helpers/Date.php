@@ -24,7 +24,7 @@ final class Date
     /**
      * Construct
      */
-    public function now()
+    public static function now()
     {
         return new self(new DateTime());
     }

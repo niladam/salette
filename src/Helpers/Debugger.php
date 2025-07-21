@@ -34,14 +34,16 @@ class Debugger
         $requestClass = get_class($pendingRequest->getRequest());
 
         // @todo see into improving this.
-        VarDumper::dump([
-            'connector' => get_class($pendingRequest->getConnector()),
-            'request' => $requestClass,
-            'method' => $psrRequest->getMethod(),
-            'uri' => (string) $psrRequest->getUri(),
-            'headers' => $headers,
-            'body' => (string) $psrRequest->getBody(),
-        ]);
+        VarDumper::dump(
+            [
+                'connector' => get_class($pendingRequest->getConnector()),
+                'request' => $requestClass,
+                'method' => $psrRequest->getMethod(),
+                'uri' => (string) $psrRequest->getUri(),
+                'headers' => $headers,
+                'body' => (string) $psrRequest->getBody(),
+            ]
+        );
     }
 
     /**
@@ -58,11 +60,13 @@ class Debugger
         $requestClass = get_class($response->getRequest());
 
         // @todo see into improving this.
-        VarDumper::dump([
-            'status' => $response->status(),
-            'headers' => $headers,
-            'body' => $response->body(),
-        ]);
+        VarDumper::dump(
+            [
+                'status' => $response->status(),
+                'headers' => $headers,
+                'body' => $response->body(),
+            ]
+        );
     }
 
     /**

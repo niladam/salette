@@ -81,7 +81,7 @@ class Pool
     /**
      * Specify a callback to happen for each failed request
      *
-     * @param  callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)  $callable
+     * @param callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)  $callable
      */
     public function withExceptionHandler(callable $callable): self
     {
@@ -93,7 +93,7 @@ class Pool
     /**
      * Set the amount of concurrent requests that should be sent
      *
-     * @param  int|callable(int $pendingRequests): (int)  $concurrency
+     * @param int|callable(int $pendingRequests): (int)  $concurrency
      */
     public function setConcurrency($concurrency): self
     {
@@ -105,7 +105,7 @@ class Pool
     /**
      * Set the requests
      *
-     * @param  iterable|callable  $requests
+     * @param iterable|callable $requests
      */
     public function setRequests($requests): self
     {
@@ -117,8 +117,8 @@ class Pool
             $requestsIterable = $requests;
 
             $requests = function () use ($requestsIterable) {
-                foreach ($requestsIterable as $item) {
-                    yield $item;
+                foreach ($requestsIterable as $key => $item) {
+                    yield $key => $item;
                 }
             };
         }
@@ -164,11 +164,13 @@ class Pool
         // Next we'll use an EachPromise which accepts an iterator of
         // requests and will process them as the concurrency we set.
 
-        $eachPromise = new EachPromise($preparedRequests(), [
-            'concurrency' => $this->concurrency,
-            'fulfilled' => $this->responseHandler,
-            'rejected' => $this->exceptionHandler,
-        ]);
+        $eachPromise = new EachPromise(
+            $preparedRequests(), [
+                'concurrency' => $this->concurrency,
+                'fulfilled' => $this->responseHandler,
+                'rejected' => $this->exceptionHandler,
+            ]
+        );
 
         return $eachPromise->promise();
     }

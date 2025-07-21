@@ -35,8 +35,12 @@ class UserRequestWithBootPlugin extends Request
         return '/user';
     }
 
+    public $userId;
+    public $groupId;
+
     public function __construct($userId = null, $groupId = null)
     {
-        //
+        $this->userId = $userId;
+        $this->groupId = $groupId;
     }
 }

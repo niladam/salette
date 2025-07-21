@@ -10,6 +10,7 @@ use Salette\Contracts\Authenticator;
 use Salette\Contracts\BodyRepository;
 use Salette\Contracts\FakeResponse;
 use Salette\Enums\Method;
+use Salette\Enums\PipeOrder;
 use Salette\Exceptions\DuplicatePipeNameException;
 use Salette\Exceptions\FatalRequestException;
 use Salette\Exceptions\InvalidHttpMethod;
@@ -112,7 +113,7 @@ class PendingRequest
         // the fake response for every subsequent middleware.
 
         $this->middleware()->merge(Config::globalMiddleware());
-        $this->middleware()->onRequest(new DetermineMockResponse(), 'determineMockResponse');
+        $this->middleware()->onRequest(new DetermineMockResponse(), 'determineMockResponse', PipeOrder::last());
 
         // Next, we'll boot our plugins. These plugins can add headers, config variables and
         // even register their own middleware. We'll use a tap method to simply apply logic
