@@ -24,7 +24,7 @@ class CustomOAuthAuthenticator extends AccessTokenAuthenticator
         string $accessToken,
         string $greeting,
         $refreshToken = null,
-        $expiresAt = null,
+        $expiresAt = null
     ) {
         $this->expiresAt = $expiresAt;
         $this->refreshToken = $refreshToken;

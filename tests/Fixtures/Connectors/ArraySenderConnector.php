@@ -6,6 +6,7 @@ namespace Salette\Tests\Fixtures\Connectors;
 use Salette\Http\Connector;
 use Salette\Traits\Plugins\AcceptsJson;
 use Salette\Tests\Fixtures\Senders\ArraySender;
+use Salette\Contracts\Sender;
 
 class ArraySenderConnector extends Connector
 {
@@ -22,6 +23,14 @@ class ArraySenderConnector extends Connector
     public function resolveBaseUrl(): string
     {
         return apiUrl();
+    }
+
+    /**
+     * Define the default request sender.
+     */
+    protected function defaultSender(): Sender
+    {
+        return new $this->defaultSender();
     }
 
     /**

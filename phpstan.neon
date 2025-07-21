@@ -3,12 +3,8 @@ includes:
 
 parameters:
   editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
-  ignoreErrors:
-    -
-      message: '#^Method Backoffice\\NexusSdk\\Http\\Response\:\:collect\(\) has invalid return type Illuminate\\Support\\Collection\.$#'
-      paths:
-        - %currentWorkingDirectory%/src/Http/Response.php
+
   excludePaths:
-    - src/Laravel/NexusConnectorServiceProvider.php
-    - src/Laravel/Nexus.php
-    - src/Laravel/config/nexus-sdk.php
+    - tests/
+
+  ignoreErrors:

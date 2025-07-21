@@ -89,8 +89,7 @@ test('a request can be mocked with a sequence', function () {
 
     $this->expectException(NoMockResponseFoundException::class);
     $this->expectExceptionMessage(
-                'Salette was unable to guess a mock response for your request [https://tests.saloon.dev/api/user],
-                                      consider using a wildcard url mock or a connector mock.'
+        'Salette was unable to guess a mock response for your request [https://tests.saloon.dev/api/user]'
     );
 
     $connector->send(new UserRequest());

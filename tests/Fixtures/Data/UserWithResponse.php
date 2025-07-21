@@ -26,13 +26,12 @@ class UserWithResponse implements WithResponse
         $this->twitter = $twitter;
         $this->actualName = $actualName;
         $this->name = $name;
-        //
     }
 
-    public function fromResponse(Response $response)
+    public static function fromResponse(Response $response): self
     {
         $data = $response->json();
 
-        return new static($data['name'], $data['actual_name'], $data['twitter']);
+        return new self($data['name'], $data['actual_name'], $data['twitter']);
     }
 }

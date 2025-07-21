@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Salette\Tests\Unit;
-
 use Pest\Expectation;
 use Salette\Data\RecordedResponse;
 use Salette\Http\Faking\MockClient;
@@ -120,38 +118,58 @@ test('arbitrary data can be merged in the fixture', function () {
 });
 
 test('arbitrary data using dot-notation can be merged in the fixture', function () {
-    $response = connector()->send(new DTORequest(), new MockClient([
-        MockResponse::fixture('users')->merge([
-            'data.0.twitter' => '@jon_doe',
-        ]),
-    ]));
+    // Temporarily set the fixture path to use the Saloon fixtures which have the correct structure
+    $originalPath = \Salette\MockConfig::getFixturePath();
+    \Salette\MockConfig::setFixturePath('tests/Fixtures/Saloon');
+    
+    try {
+        $response = connector()->send(new DTORequest(), new MockClient([
+            MockResponse::fixture('users')->merge([
+                'data.0.twitter' => '@jon_doe',
+            ]),
+        ]));
 
-    expect($response->json('data'))
-        ->toHaveCount(2)
-        ->sequence(
-            fn (Expectation $e) => $e->twitter->toBe('@jon_doe'),
-            fn (Expectation $e) => $e->twitter->toBe('@janedoe'),
-        );
+        $data = $response->json('data');
+
+        expect($data)
+            ->toHaveCount(2)
+            ->sequence(
+                fn (Expectation $e) => $e->twitter->toBe('@jon_doe'),
+                fn (Expectation $e) => $e->twitter->toBe('@janedoe'),
+            );
+    } finally {
+        // Restore the original fixture path
+        \Salette\MockConfig::setFixturePath($originalPath);
+    }
 });
 
 test('a closure can be used to modify the mock response data', function () {
-    $response = connector()->send(new DTORequest(), new MockClient([
-        MockResponse::fixture('users')->through(fn (array $data) => array_merge_recursive($data, [
-            'data' => [
-                [
-                    'name' => 'Sam',
-                    'actual_name' => 'Carré',
-                    'twitter' => '@carre_sam',
+    // Temporarily set the fixture path to use the Saloon fixtures which have the correct structure
+    $originalPath = \Salette\MockConfig::getFixturePath();
+    \Salette\MockConfig::setFixturePath('tests/Fixtures/Saloon');
+    
+    try {
+        $response = connector()->send(new DTORequest(), new MockClient([
+            MockResponse::fixture('users')->through(fn (array $data) => array_merge_recursive($data, [
+                'data' => [
+                    [
+                        'name' => 'Sam',
+                        'actual_name' => 'Carré',
+                        'twitter' => '@carre_sam',
+                    ],
                 ],
-            ],
-        ])),
-    ]));
+            ])),
+        ]));
 
-    expect($response->json('data'))
-        ->toHaveCount(3)
-        ->sequence(
-            fn (Expectation $e) => $e->twitter->toBe('@jondoe'),
-            fn (Expectation $e) => $e->twitter->toBe('@janedoe'),
-            fn (Expectation $e) => $e->twitter->toBe('@carre_sam'),
-        );
+        expect($response->json('data'))
+            ->toHaveCount(3)
+            ->sequence(
+                fn (Expectation $e) => $e->twitter->toBe('@jondoe'),
+                fn (Expectation $e) => $e->twitter->toBe('@janedoe'),
+                fn (Expectation $e) => $e->twitter->toBe('@carre_sam'),
+            );
+    } finally {
+        // Restore the original fixture path
+        \Salette\MockConfig::setFixturePath($originalPath);
+    }
 });

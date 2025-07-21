@@ -12,7 +12,7 @@ class UserResponse extends Response
      * @return \Salette\Tests\Fixtures\Responses\UserData
      * @throws \JsonException
      */
-    public function customCastMethod()
+    public function customCastMethod(): UserData
     {
         return new UserData($this->json('foo'));
     }

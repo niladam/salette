@@ -106,11 +106,19 @@ class Fixture
                 $body = json_decode($body ?: '[]', true, \JSON_THROW_ON_ERROR);
             }
 
-            // We can then merge the data in the body usingthrough
+            // We can then merge the data in the body using
             // the ArrayHelpers for dot-notation support.
             if (is_array($this->merge)) {
                 foreach ($this->merge as $key => $value) {
-                    ArrayHelpers::set($body, $key, $value);
+                    // Handle nested JSON strings in the data field
+                    if (strpos($key, 'data.') === 0 && isset($body['data']) && is_string($body['data'])) {
+                        $nestedData = json_decode($body['data'], true, \JSON_THROW_ON_ERROR);
+                        $nestedKey = substr($key, 5); // Remove 'data.' prefix
+                        ArrayHelpers::set($nestedData, $nestedKey, $value);
+                        $body['data'] = json_encode($nestedData);
+                    } else {
+                        ArrayHelpers::set($body, $key, $value);
+                    }
                 }
             }
 

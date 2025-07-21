@@ -16,9 +16,6 @@ test('the default sender on all connectors is the guzzle sender', function () {
     expect($sender)
         ->toBeInstanceOf(GuzzleSender::class)
         ->and($connector->sender())->toBe($sender);
-
-
-
 });
 
 test('you can overwrite the sender on a connector using the property', function () {
@@ -62,6 +59,7 @@ test('it will throw an exception if the sender does not implement the sender int
     $connector->setDefaultSender(UserRequest::class);
 
     $connector->sender();
-})->throws(TypeError::class, 'Return value must be of type Salette\Contracts\Sender, Salette\Tests\Fixtures\Requests\UserRequest returned');
-
-
+})->throws(
+    TypeError::class,
+    'Return value of Salette\Tests\Fixtures\Connectors\ArraySenderConnector::defaultSender() must implement interface Salette\Contracts\Sender, instance of Salette\Tests\Fixtures\Requests\UserRequest returned'
+);

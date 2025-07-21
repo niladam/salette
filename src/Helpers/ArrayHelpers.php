@@ -105,8 +105,11 @@ class ArrayHelpers
 
             unset($keys[$i]);
 
-            if (! isset($array[$segment]) || ! is_array($array[$segment])) {
+            if (! isset($array[$segment])) {
                 $array[$segment] = [];
+            } elseif (! is_array($array[$segment])) {
+                // If the item exists but is not an array, convert it to an array
+                $array[$segment] = (array) $array[$segment];
             }
 
             $array = &$array[$segment];

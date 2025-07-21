@@ -19,6 +19,7 @@ class RetryConnector extends TestConnector
         $this->tries = $tries;
         $this->retryInterval = $retryInterval;
         $this->throwOnMaxTries = $throwOnMaxTries;
+        $this->handleRetry = $handleRetry;
     }
 
     public function handleRetry($exception, RequestContract $request): bool

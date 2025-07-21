@@ -60,7 +60,7 @@ test('an asynchronous response will still be passed through response middleware'
     $connector = new TestConnector();
 
     $promise = $connector->sendAsync($request, $mockClient);
-    $response = $promise->wait();
+    $promise->wait();
 
     expect($passed)->toBeTrue();
 });
@@ -72,16 +72,15 @@ test('an asynchronous request will return a custom response', function () {
 
     $connector = new TestConnector();
     $request = new UserRequestWithCustomResponse();
-    $request->withMockClient($mockClient);
 
-    $promise = $connector->sendAsync($request);
+    $promise = $connector->sendAsync($request, $mockClient);
 
     $response = $promise->wait();
 
     expect($response)
         ->toBeInstanceOf(UserResponse::class)
         ->and($response)->customCastMethod()->toBeInstanceOf(UserData::class)
-        ->and($response)->foo()->toBe('bar');
+        ->and($response->foo())->toBe('bar');
 });
 
 test('middleware is only executed when an asynchronous request is sent', function () {

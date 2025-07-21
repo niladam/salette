@@ -12,7 +12,7 @@ class ApiResponse
     public array $data;
 
     public function __construct(
-        array $data,
+        array $data
     ) {
         $this->data = $data;
         //

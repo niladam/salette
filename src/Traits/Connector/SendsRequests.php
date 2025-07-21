@@ -107,13 +107,20 @@ trait SendsRequests
 
         return Utils::task(function () use ($mockClient, $request, $sender) {
             $pendingRequest = $this->createPendingRequest($request, $mockClient)->setAsynchronous(true);
+            
+            // Check if we should use a fake response
+            if ($pendingRequest->hasFakeResponse()) {
+                $response = $this->createFakeResponse($pendingRequest);
+                return $response->then(
+                    fn (Response $response) => $pendingRequest->executeResponsePipeline($response)
+                );
+            }
+            
             $requestPromise = $sender->sendAsync($pendingRequest);
 
-            $requestPromise->then(
+            return $requestPromise->then(
                 fn (Response $response) => $pendingRequest->executeResponsePipeline($response)
             );
-
-            return $requestPromise;
         });
     }
 
