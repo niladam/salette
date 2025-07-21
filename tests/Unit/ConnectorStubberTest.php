@@ -99,4 +99,17 @@ test('formats class name correctly', function () {
 
 test('stub create method returns true when called with no arguments', function () {
     expect(Stub::create())->toBeTrue();
+    
+    // Clean up any files that might have been created in the project root
+    $projectRoot = dirname(__DIR__, 2);
+    $jsonPlaceholderPath = $projectRoot . '/Http/Integrations/JsonPlaceholder';
+    if (is_dir($jsonPlaceholderPath)) {
+        removeDirectory($jsonPlaceholderPath);
+    }
+    
+    // Also clean up from app directory if it exists
+    $appJsonPlaceholderPath = $projectRoot . '/app/Http/Integrations/JsonPlaceholder';
+    if (is_dir($appJsonPlaceholderPath)) {
+        removeDirectory($appJsonPlaceholderPath);
+    }
 });
