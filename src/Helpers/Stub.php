@@ -31,18 +31,19 @@ class Stub
 
         $stubber = new ConnectorStubber($baseDirectory, $namespace);
 
-        return $stubber->generateIntegration(
-            $integrationName, [
-                'base_url' => $baseUrl,
-            ]
-        );
+        return $stubber->generateIntegration($integrationName, [
+            'base_url' => $baseUrl,
+        ]);
     }
 
     /**
      * Generate the default JsonPlaceholder example integration.
      */
-    private static function generateJsonPlaceholderExample(string $baseDirectory, string $integrationName, string $baseUrl): bool
-    {
+    private static function generateJsonPlaceholderExample(
+        string $baseDirectory,
+        string $integrationName,
+        string $baseUrl
+    ): bool {
         $namespace = 'App\\Http\\Integrations\\' . $integrationName;
         $integrationPath = $baseDirectory . '/Http/Integrations/' . $integrationName;
         $requestsPath = $integrationPath . '/Requests';
@@ -73,6 +74,7 @@ class Stub
             "        ];\n" .
             "    }\n" .
             "}\n";
+
         file_put_contents($integrationPath . "/{$integrationName}Connector.php", $connectorContent);
 
         // GetPostsRequest
@@ -89,6 +91,7 @@ class Stub
             "        return '/posts';\n" .
             "    }\n" .
             "}\n";
+
         file_put_contents($requestsPath . '/GetPostsRequest.php', $getRequestContent);
 
         // CreatePostRequest
@@ -116,6 +119,7 @@ class Stub
             "        ];\n" .
             "    }\n" .
             "}\n";
+
         file_put_contents($requestsPath . '/CreatePostRequest.php', $postRequestContent);
 
         return true;
@@ -126,14 +130,21 @@ class Stub
      */
     private static function getBaseDirectory(): string
     {
+        $currentDir = getcwd();
+        if ($currentDir === false) {
+            $currentDir = __DIR__;
+        }
+
         $possiblePaths = [
-            getcwd(),
+            $currentDir,
             dirname(__DIR__, 2),
             dirname(__DIR__, 2),
         ];
 
         foreach ($possiblePaths as $path) {
-            if (is_dir($path) && (file_exists($path . '/composer.json') || file_exists($path . '/vendor'))) {
+            if (is_dir($path)
+                && (file_exists($path . '/composer.json') || file_exists($path . '/vendor'))
+            ) {
                 // If there's an app folder, use it
                 if (is_dir($path . '/app')) {
                     return $path . '/app';
@@ -143,6 +154,6 @@ class Stub
             }
         }
 
-        return getcwd();
+        return $currentDir;
     }
 }
