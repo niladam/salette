@@ -84,3 +84,65 @@ test('you can prevent stray api requests', function () {
 
     Config::clearGlobalMiddleware();
 });
+
+test('preventStrayRequests allows requests with mock client', function () {
+    Config::preventStrayRequests();
+
+    $mockClient = new MockClient([
+        new MockResponse(['name' => 'Test User']),
+    ]);
+
+    $response = TestConnector::make()->send(new UserRequest(), $mockClient);
+
+    expect($response)->toBeInstanceOf(Response::class);
+    expect($response->json())->toBe(['name' => 'Test User']);
+
+    Config::clearGlobalMiddleware();
+});
+
+test('preventStrayRequests allows requests with global mock client', function () {
+    Config::preventStrayRequests();
+
+    $mockClient = new MockClient([
+        new MockResponse(['name' => 'Test User']),
+    ]);
+
+    // Set global mock client
+    Config::globalMiddleware()->onRequest(function (PendingRequest $pendingRequest) use ($mockClient) {
+        $pendingRequest->withMockClient($mockClient);
+    });
+
+    $response = TestConnector::make()->send(new UserRequest());
+
+    expect($response)->toBeInstanceOf(Response::class);
+    expect($response->json())->toBe(['name' => 'Test User']);
+
+    Config::clearGlobalMiddleware();
+});
+
+test('preventStrayRequests throws exception for real requests without mock client', function () {
+    Config::preventStrayRequests();
+
+    $this->expectException(StrayRequestException::class);
+    $this->expectExceptionMessage('Attempted to make a real API request! Make sure to use a mock response or fixture.');
+
+    // This should throw because no mock client is provided
+    TestConnector::make()->send(new UserRequest());
+
+    Config::clearGlobalMiddleware();
+});
+
+test('preventStrayRequests can be disabled by clearing global middleware', function () {
+    Config::preventStrayRequests();
+    Config::clearGlobalMiddleware();
+
+    // This should not throw because we cleared the global middleware
+    $mockClient = new MockClient([
+        new MockResponse(['name' => 'Test User']),
+    ]);
+
+    $response = TestConnector::make()->send(new UserRequest(), $mockClient);
+
+    expect($response)->toBeInstanceOf(Response::class);
+    expect($response->json())->toBe(['name' => 'Test User']);
+});

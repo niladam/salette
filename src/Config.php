@@ -94,7 +94,7 @@ final class Config
                 if (! $pendingRequest->hasMockClient()) {
                     throw new StrayRequestException();
                 }
-            }, PipeOrder::LAST
+            }, null, PipeOrder::last()
         );
     }
 }
