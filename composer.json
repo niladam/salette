@@ -1,6 +1,7 @@
 {
     "name": "niladam/salette",
     "description": "🚀Easily build API integrations into your legacy application.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Madalin Tache",
