@@ -193,7 +193,7 @@ class OAuthConfig
     /**
      * Set the default scopes.
      *
-     * @param  array<string>  $defaultScopes
+     * @param  array<string> $defaultScopes
      * @return $this
      */
     public function setDefaultScopes(array $defaultScopes): self
@@ -206,7 +206,7 @@ class OAuthConfig
     /**
      * Set the request modifier callable which can be used to modify the request being sent
      *
-     * @param  callable(Request): (void)  $requestModifier
+     * @param  callable(Request): (void) $requestModifier
      * @return $this
      */
     public function setRequestModifier(callable $requestModifier): self
@@ -221,7 +221,7 @@ class OAuthConfig
      *
      * @template TRequest of Request
      *
-     * @param  TRequest  $request
+     * @param  TRequest $request
      * @return TRequest
      */
     public function invokeRequestModifier(Request $request): Request

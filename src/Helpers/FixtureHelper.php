@@ -12,8 +12,8 @@ class FixtureHelper
     /**
      * Recursively replaces array attributes
      *
-     * @param  array<string, mixed>  $source
-     * @param  array<string, mixed>  $rules
+     * @param  array<string, mixed> $source
+     * @param  array<string, mixed> $rules
      * @return array<string, mixed>
      */
     public static function recursivelyReplaceAttributes(
@@ -25,19 +25,21 @@ class FixtureHelper
             $rules = array_change_key_case($rules, CASE_LOWER);
         }
 
-        array_walk_recursive($source, static function (&$value, $key) use ($rules, $caseSensitiveKeys) {
-            if ($caseSensitiveKeys === false) {
-                $key = mb_strtolower((string) $key);
+        array_walk_recursive(
+            $source, static function (&$value, $key) use ($rules, $caseSensitiveKeys) {
+                if ($caseSensitiveKeys === false) {
+                    $key = mb_strtolower((string) $key);
+                }
+
+                if (! array_key_exists($key, $rules)) {
+                    return;
+                }
+
+                $swappedValue = $rules[$key];
+
+                $value = is_callable($swappedValue) ? $swappedValue($value) : $swappedValue;
             }
-
-            if (! array_key_exists($key, $rules)) {
-                return;
-            }
-
-            $swappedValue = $rules[$key];
-
-            $value = is_callable($swappedValue) ? $swappedValue($value) : $swappedValue;
-        });
+        );
 
         return $source;
     }
@@ -45,7 +47,7 @@ class FixtureHelper
     /**
      * Replace sensitive regex patterns
      *
-     * @param  array<string, string>  $patterns
+     * @param array<string, string> $patterns
      */
     public static function replaceSensitiveRegexPatterns(string $source, array $patterns): string
     {

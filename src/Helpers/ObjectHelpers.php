@@ -12,9 +12,9 @@ class ObjectHelpers
     /**
      * Get an item from an object or array using "dot" notation.
      *
-     * @param  object|array<string, mixed>  $object
-     * @param  string  $key
-     * @param  mixed  $default
+     * @param  object|array<string, mixed> $object
+     * @param  string                      $key
+     * @param  mixed                       $default
      * @return mixed
      */
     public static function get($object, $key, $default = null)

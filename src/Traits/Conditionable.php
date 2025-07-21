@@ -11,9 +11,9 @@ trait Conditionable
     /**
      * Invoke a callable when a given value returns a truthy value.
      *
-     * @param  \Closure():mixed|mixed  $value  A value or a zero-arg closure that returns a value.
-     * @param  callable  $callback  fn($this, $value): void
-     * @param  callable|null  $default  fn($this, $value): void
+     * @param  \Closure():mixed|mixed $value    A value or a zero-arg closure that returns a value.
+     * @param  callable               $callback fn($this, $value): void
+     * @param  callable|null          $default  fn($this, $value): void
      * @return $this
      */
     public function when($value, callable $callback, ?callable $default = null): self
@@ -36,9 +36,9 @@ trait Conditionable
     /**
      * Invoke a callable when a given value returns a falsy value.
      *
-     * @param  \Closure():mixed|mixed  $value  A value or a zero-arg closure that returns a value.
-     * @param  callable  $callback  fn($this, $value): void
-     * @param  callable|null  $default  fn($this, $value): void
+     * @param  \Closure():mixed|mixed $value    A value or a zero-arg closure that returns a value.
+     * @param  callable               $callback fn($this, $value): void
+     * @param  callable|null          $default  fn($this, $value): void
      * @return $this
      */
     public function unless($value, callable $callback, ?callable $default = null): self

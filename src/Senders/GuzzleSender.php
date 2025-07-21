@@ -61,13 +61,15 @@ class GuzzleSender implements Sender
     {
         $this->handlerStack = HandlerStack::create();
 
-        return new GuzzleClient([
-            RequestOptions::CRYPTO_METHOD => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
-            RequestOptions::CONNECT_TIMEOUT => 10,
-            RequestOptions::TIMEOUT => 30,
-            RequestOptions::HTTP_ERRORS => true,
-            'handler' => $this->handlerStack,
-        ]);
+        return new GuzzleClient(
+            [
+                RequestOptions::CRYPTO_METHOD => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
+                RequestOptions::CONNECT_TIMEOUT => 10,
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::HTTP_ERRORS => true,
+                'handler' => $this->handlerStack,
+            ]
+        );
     }
 
     /**
@@ -151,7 +153,9 @@ class GuzzleSender implements Sender
         RequestInterface $psrRequest,
         ?Exception $exception = null
     ): Response {
-        /** @var class-string<Response> $responseClass */
+        /**
+         * @var class-string<Response> $responseClass
+         */
         $responseClass = $pendingRequest->getResponseClass();
 
         return $responseClass::fromPsrResponse($psrResponse, $pendingRequest, $psrRequest, $exception);

@@ -12,7 +12,7 @@ interface BodyRepository
     /**
      * Set the raw data in the repository.
      *
-     * @param  array<array-key, mixed>|mixed  $value
+     * @param array<array-key, mixed>|mixed $value
      */
     public function set($value): self;
 

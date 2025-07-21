@@ -9,7 +9,7 @@ interface MergeableBody
     /**
      * Merge one or more associative arrays into this body.
      *
-     * @param  array<string,mixed>  ...$arrays
+     * @param array<string,mixed> ...$arrays
      */
     public function merge(array ...$arrays): self;
 }

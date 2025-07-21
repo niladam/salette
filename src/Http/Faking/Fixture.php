@@ -62,7 +62,7 @@ class Fixture
     /**
      * Specify data to merge with the mock response data.
      *
-     * @param  array<array-key, mixed>  $merge
+     * @param array<array-key, mixed> $merge
      */
     public function merge(array $merge = []): self
     {
@@ -324,7 +324,7 @@ class Fixture
     /**
      * Merge context values into the fixture
      *
-     * @param  array<string, mixed>  $context
+     * @param array<string, mixed> $context
      */
     public function withContext(array $context): self
     {

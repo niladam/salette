@@ -20,7 +20,9 @@ class ValidateProperties implements RequestMiddleware
         // Validate that each header provided has a string key
 
         foreach ($pendingRequest->headers()->all() as $key => $unused) {
-            /** @phpstan-ignore-next-line */
+            /**
+             * @phpstan-ignore-next-line
+             */
             if (! is_string($key)) {
                 throw new InvalidHeaderException(
                     'One or more of the headers are invalid. ' .

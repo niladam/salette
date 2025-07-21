@@ -49,7 +49,9 @@ trait ManagesFakeResponses
             $factories->streamFactory,
         );
 
-        /** @var class-string<Response> $responseClass */
+        /**
+         * @var class-string<Response> $responseClass
+         */
         $responseClass = $pendingRequest->getResponseClass();
 
         $response = $responseClass::fromPsrResponse(

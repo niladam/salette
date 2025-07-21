@@ -89,10 +89,12 @@ final class Config
      */
     public static function preventStrayRequests(): void
     {
-        self::globalMiddleware()->onRequest(static function (PendingRequest $pendingRequest) {
-            if (! $pendingRequest->hasMockClient()) {
-                throw new StrayRequestException();
-            }
-        }, PipeOrder::LAST);
+        self::globalMiddleware()->onRequest(
+            static function (PendingRequest $pendingRequest) {
+                if (! $pendingRequest->hasMockClient()) {
+                    throw new StrayRequestException();
+                }
+            }, PipeOrder::LAST
+        );
     }
 }

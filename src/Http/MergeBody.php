@@ -63,7 +63,9 @@ class MergeBody
             $body->setMultipartBodyFactory($pendingRequest->getFactoryCollection()->multipartBodyFactory);
         }
 
-        /** @var BodyRepository|null $body */
+        /**
+         * @var BodyRepository|null $body
+         */
         $pendingRequest->setBody($body);
 
         return $pendingRequest;

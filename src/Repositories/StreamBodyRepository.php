@@ -22,7 +22,7 @@ class StreamBodyRepository implements BodyRepository
     protected $stream = null;
 
     /**
-     * @param  StreamInterface|resource|null  $value
+     * @param StreamInterface|resource|null $value
      */
     public function __construct($value = null)
     {
@@ -32,7 +32,7 @@ class StreamBodyRepository implements BodyRepository
     /**
      * Set a value inside the repository
      *
-     * @param  StreamInterface|resource|null  $value
+     * @param  StreamInterface|resource|null $value
      * @return $this
      */
     public function set($value): self

@@ -27,7 +27,7 @@ trait Macroable
     /**
      * Create a macro
      *
-     * @param  object|callable  $macro
+     * @param object|callable $macro
      */
     public static function macro(string $name, $macro): void
     {
@@ -37,8 +37,8 @@ trait Macroable
     /**
      * Add a mixin
      *
-     * @param  object|class-string  $mixin  Either an instance whose methods return macros, or a class-name to
-     *                                      instantiate
+     * @param object|class-string $mixin Either an instance whose methods return macros, or a class-name to
+     *                                   instantiate
      *
      * @throws ReflectionException
      */
@@ -70,7 +70,7 @@ trait Macroable
     /**
      * Handle a static call
      *
-     * @param  array<string,mixed>  $parameters
+     * @param  array<string,mixed> $parameters
      * @return mixed
      *
      * @throws BadMethodCallException
@@ -88,14 +88,16 @@ trait Macroable
             $callback = $macro;
         }
 
-        /** @var callable $callback */
+        /**
+         * @var callable $callback
+         */
         return call_user_func_array($callback, $parameters);
     }
 
     /**
      * Handle a method call
      *
-     * @param  array<string,mixed>  $parameters
+     * @param  array<string,mixed> $parameters
      * @return mixed
      *
      * @throws BadMethodCallException
@@ -113,7 +115,9 @@ trait Macroable
             $callback = $macro;
         }
 
-        /** @var callable $callback */
+        /**
+         * @var callable $callback
+         */
         return call_user_func_array($callback, $parameters);
     }
 }

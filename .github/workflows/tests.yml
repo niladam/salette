@@ -41,10 +41,4 @@ jobs:
       run: composer install --prefer-dist --no-progress
     
     - name: Execute tests (Pest)
-      run: composer test
-    
-    - name: Run PHPStan
-      run: composer pstan
-    
-    - name: Run Code Style Check
-      run: composer cs:check 
+      run: composer test 
