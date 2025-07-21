@@ -6,6 +6,7 @@
 
 ## The power of [Saloon](https://github.com/saloonphp/saloon) - for PHP 7.4
 
+[![Downloads](https://img.shields.io/packagist/dt/niladam/salette.svg)](https://packagist.org/packages/niladam/salette)
 [![Tests](https://github.com/niladam/salette/workflows/Tests/badge.svg)](https://github.com/niladam/salette/actions?query=workflow%3ATests)
 [![PHP 7.4](https://img.shields.io/badge/PHP-7.4-blue.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
