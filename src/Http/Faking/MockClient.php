@@ -257,7 +257,7 @@ class MockClient
     /**
      * Assert that given requests were sent in order
      *
-     * @param array<\Closure|class-string<Request>|string> $callbacks
+     * @param  array<\Closure|class-string<Request>|string>  $callbacks
      *
      * @throws \ReflectionException
      */
@@ -275,7 +275,7 @@ class MockClient
     /**
      * Assert JSON response data was received
      *
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      *
      * @deprecated This method will be removed in v4
      */

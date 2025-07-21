@@ -47,8 +47,8 @@ class FakeResponse implements FakeResponseContract
     /**
      * Create a new mock response
      *
-     * @param array<string, mixed>|string $body
-     * @param array<string, mixed>        $headers
+     * @param  array<string, mixed>|string  $body
+     * @param  array<string, mixed>  $headers
      */
     public function __construct($body = [], int $status = 200, array $headers = [])
     {

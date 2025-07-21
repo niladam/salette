@@ -37,7 +37,7 @@ trait AuthorizationCodeGrant
     /**
      * Get the Authorization URL.
      *
-     * @param array<string> $scopes
+     * @param  array<string>  $scopes
      */
     public function getAuthorizationUrl(
         array $scopes = [],
@@ -89,7 +89,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param  callable(TRequest): (void)|null $requestModifier
+     * @param  callable(TRequest): (void)|null  $requestModifier
      * @return ($returnResponse is true ? Response : OAuthAuthenticator)
      *
      * @throws InvalidStateException
@@ -135,7 +135,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param  callable(TRequest): (void)|null $requestModifier
+     * @param  callable(TRequest): (void)|null  $requestModifier
      * @return ($returnResponse is true ? Response : OAuthAuthenticator)
      *
      * @throws \Throwable
@@ -217,7 +217,7 @@ trait AuthorizationCodeGrant
      *
      * @template TRequest of Request
      *
-     * @param callable(TRequest): (void)|null $requestModifier
+     * @param  callable(TRequest): (void)|null  $requestModifier
      */
     public function getUser(OAuthAuthenticator $oauthAuthenticator, ?callable $requestModifier = null): Response
     {

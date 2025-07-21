@@ -15,7 +15,7 @@ class GuzzleMultipartBodyFactory implements MultipartBodyFactory
     /**
      * Create a multipart body
      *
-     * @param array<MultipartValue> $multipartValues
+     * @param  array<MultipartValue>  $multipartValues
      */
     public function create(
         StreamFactoryInterface $streamFactory,

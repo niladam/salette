@@ -14,7 +14,7 @@ class StringHelpers
     /**
      * Determine if a given string matches a given pattern.
      *
-     * @param string|iterable<string> $pattern
+     * @param  string|iterable<string>  $pattern
      */
     public static function matchesPattern($pattern, string $value): bool
     {

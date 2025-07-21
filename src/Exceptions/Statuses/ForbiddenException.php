@@ -6,6 +6,4 @@ namespace Salette\Exceptions\Statuses;
 
 use Salette\Exceptions\ClientException;
 
-class ForbiddenException extends ClientException
-{
-}
+class ForbiddenException extends ClientException {}

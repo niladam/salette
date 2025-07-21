@@ -41,12 +41,12 @@ use Salette\Tests\Fixtures\Connectors\TestConnector;
 |
 */
 
-function apiUrl()
+function apiUrl(): string
 {
     return 'https://tests.saloon.dev/api';
 }
 
-function connector()
+function connector(): TestConnector
 {
     return new TestConnector;
 }
@@ -85,4 +85,25 @@ function getCustomVarDump($output)
 
         $dumper->dump($var, $output);
     };
+}
+
+/**
+ * Recursively remove a directory and all its contents.
+ */
+function removeDirectory(string $dir): void
+{
+    if (!is_dir($dir)) {
+        return;
+    }
+
+    $files = array_diff(scandir($dir), ['.', '..']);
+    foreach ($files as $file) {
+        $path = $dir . '/' . $file;
+        if (is_dir($path)) {
+            removeDirectory($path);
+        } else {
+            unlink($path);
+        }
+    }
+    rmdir($dir);
 }

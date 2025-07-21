@@ -81,7 +81,7 @@ class Pool
     /**
      * Specify a callback to happen for each failed request
      *
-     * @param callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)  $callable
+     * @param  callable(mixed $reason, array-key $key, PromiseInterface $poolAggregate): (void)  $callable
      */
     public function withExceptionHandler(callable $callable): self
     {
@@ -93,7 +93,7 @@ class Pool
     /**
      * Set the amount of concurrent requests that should be sent
      *
-     * @param int|callable(int $pendingRequests): (int)  $concurrency
+     * @param  int|callable(int $pendingRequests): (int)  $concurrency
      */
     public function setConcurrency($concurrency): self
     {
@@ -105,7 +105,7 @@ class Pool
     /**
      * Set the requests
      *
-     * @param iterable|callable $requests
+     * @param  iterable|callable  $requests
      */
     public function setRequests($requests): self
     {

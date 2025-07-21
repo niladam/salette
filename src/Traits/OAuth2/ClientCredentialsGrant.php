@@ -25,8 +25,8 @@ trait ClientCredentialsGrant
      *
      * @template TRequest of Request
      *
-     * @param array<string>                   $scopes
-     * @param callable(TRequest): (void)|null $requestModifier
+     * @param  array<string>  $scopes
+     * @param  callable(TRequest): (void)|null  $requestModifier
      */
     public function getAccessToken(
         array $scopes = [],

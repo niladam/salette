@@ -26,7 +26,7 @@ class StringBodyRepository implements BodyRepository
     /**
      * Set a value inside the repository
      *
-     * @param  string|null $value
+     * @param  string|null  $value
      * @return $this
      */
     public function set($value): self
