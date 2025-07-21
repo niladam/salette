@@ -6,6 +6,10 @@
 
 ## The power of [Saloon](https://github.com/saloonphp/saloon) - for PHP 7.4
 
+[![Tests](https://github.com/niladam/salette/workflows/Tests/badge.svg)](https://github.com/niladam/salette/actions?query=workflow%3ATests)
+[![PHP 7.4](https://img.shields.io/badge/PHP-7.4-blue.svg)](https://php.net)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 </div>
 
 **Salette** is a port of the [Saloon](https://github.com/saloonphp/saloon) PHP package, tailored specifically for legacy applications that require PHP 7.4 compatibility.
