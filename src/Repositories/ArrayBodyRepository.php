@@ -26,7 +26,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
     /**
      * Constructor
      *
-     * @param array<array-key, mixed> $value
+     * @param  array<array-key, mixed>  $value
      */
     public function __construct(array $value = [])
     {
@@ -36,7 +36,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
     /**
      * Set a value inside the repository
      *
-     * @param  array<array-key, mixed> $value
+     * @param  array<array-key, mixed>  $value
      * @return $this
      */
     public function set($value): self
@@ -53,7 +53,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
     /**
      * Merge another array into the repository
      *
-     * @param  array<array-key, mixed> ...$arrays
+     * @param  array<array-key, mixed>  ...$arrays
      * @return $this
      */
     public function merge(array ...$arrays): self
@@ -66,7 +66,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
     /**
      * Add an element to the repository.
      *
-     * @param  array-key|null $key
+     * @param  array-key|null  $key
      * @return $this
      */
     public function add($key = null, $value = null): self
@@ -93,7 +93,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
      *
      * Alias of `all()`.
      *
-     * @param  array-key|null $key
+     * @param  array-key|null  $key
      * @return ($key is null ? array<array-key, mixed> : mixed)
      */
     public function get($key = null, $default = null)
@@ -108,7 +108,7 @@ class ArrayBodyRepository implements BodyRepository, MergeableBody
     /**
      * Remove an item from the repository.
      *
-     * @param  array-key $key
+     * @param  array-key  $key
      * @return $this
      */
     public function remove($key): self

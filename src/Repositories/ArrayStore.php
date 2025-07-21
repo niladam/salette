@@ -37,7 +37,7 @@ class ArrayStore implements ArrayStoreContract
     /**
      * Retrieve a single item.
      *
-     * @param  mixed|null $default
+     * @param  mixed|null  $default
      * @return mixed
      */
     public function get(string $key, $default = null)
@@ -48,7 +48,7 @@ class ArrayStore implements ArrayStoreContract
     /**
      * Overwrite the entire repository.
      *
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      */
     public function set(array $data): ArrayStoreContract
     {
@@ -60,7 +60,7 @@ class ArrayStore implements ArrayStoreContract
     /**
      * Merge in other arrays.
      *
-     * @param  array<string, mixed> ...$arrays
+     * @param  array<string, mixed>  ...$arrays
      * @return $this
      */
     public function merge(array ...$arrays): ArrayStoreContract
@@ -73,7 +73,7 @@ class ArrayStore implements ArrayStoreContract
     /**
      * Add an item to the repository.
      *
-     * @param  mixed $value
+     * @param  mixed  $value
      * @return $this
      */
     public function add(string $key, $value): ArrayStoreContract

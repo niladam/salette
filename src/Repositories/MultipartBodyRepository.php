@@ -48,7 +48,7 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     /**
      * Set a value inside the repository
      *
-     * @param  array<MultipartValue> $value
+     * @param  array<MultipartValue>  $value
      * @return $this
      */
     public function set($value): self
@@ -67,7 +67,7 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     /**
      * Merge another array into the repository
      *
-     * @param  array<MultipartValue> ...$arrays
+     * @param  array<MultipartValue>  ...$arrays
      * @return $this
      */
     public function merge(...$arrays): self
@@ -82,8 +82,8 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     /**
      * Add an element to the repository.
      *
-     * @param  StreamInterface|resource|string $contents
-     * @param  array<string, mixed>            $headers
+     * @param  StreamInterface|resource|string  $contents
+     * @param  array<string, mixed>  $headers
      * @return $this
      */
     public function add(string $name, $contents, ?string $filename = null, array $headers = []): self
@@ -118,7 +118,7 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     /**
      * Get a specific key of the array
      *
-     * @param  array-key $key
+     * @param  array-key  $key
      * @return MultipartValue|array<MultipartValue>
      */
     public function get($key, $default = null)
@@ -179,7 +179,7 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     /**
      * Parse a multipart array
      *
-     * @param  array<string, mixed> $value
+     * @param  array<string, mixed>  $value
      * @return array<MultipartValue>
      */
     protected function parseMultipartArray(array $value): array

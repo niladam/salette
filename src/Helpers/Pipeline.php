@@ -39,7 +39,7 @@ class Pipeline
     /**
      * Process the pipeline.
      *
-     * @param  mixed $payload
+     * @param  mixed  $payload
      * @return mixed
      */
     public function process($payload)
@@ -80,7 +80,7 @@ class Pipeline
     /**
      * Set the pipes on the pipeline.
      *
-     * @param Pipe[] $pipes
+     * @param  Pipe[]  $pipes
      *
      * @throws DuplicatePipeNameException
      */

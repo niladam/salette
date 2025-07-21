@@ -27,26 +27,70 @@ Salette helps you build clean, reusable **API integrations** and SDKs in **PHP 7
 
 It organizes your requests into structured classes, centralizing your API logic and making your codebase more maintainable.
 
-```php
-<?php
-
-$forge = new ForgeConnector('api-token');
-
-$response = $forge->send(new GetServersRequest);
-
-$data = $response->json();
-```
 
 ## Key Features
 
-- Provides a simple, easy-to-learn, and modern way to build clean, reusable API integrations
-- Built on top of Guzzle, the most popular and feature-rich HTTP client
-- Works great within a team as it provides a standard everyone can follow
-- Great for building your next PHP SDK or library
-- Packed full of features like request recording, request concurrency, caching, data-transfer-object support, and full Laravel support.
-- Framework agnostic
-- Lightweight and has few dependencies.
+- 🚀 **PHP 7.4 Compatible** - Built specifically for legacy applications
+- 🔧 **Simple & Modern** - Easy-to-learn, clean API for building integrations
+- 🏗️ **Built on Guzzle** - Leverages the most popular and feature-rich HTTP client
+- 🧪 **Built-in Testing** - Mock responses, request recording, and test your integrations easily
+- 🔐 **Authentication** - Support for OAuth2, Basic Auth, Token Auth, and more
+- 📦 **Request/Response Handling** - Built-in support for JSON, XML, Form data, and more
+- 🔄 **Advanced Features** - Request concurrency, caching (soon), Dto support
+- 🎯 **Team-Friendly** - Provides a standard everyone can follow
+- 🏢 **Framework Agnostic** - Vanilla PHP or any PHP framework that supports composer :)
+- 📚 **Laravel Support** - Full Laravel integration and support (soon)
+- ⚡ **Lightweight** - Few dependencies, fast performance
 
+
+## Quick Start
+
+### 1. Generate a Working Example
+
+The fastest way to get started is to generate a ready-to-use integration:
+
+```bash
+php vendor/niladam/salette/examples/create-integration.php
+```
+
+Or, in code:
+
+```php
+use Salette\Helpers\Stub;
+
+Stub::create(); // Instantly creates a JsonPlaceholder integration you can use and modify
+```
+
+This will create:
+- `app/Http/Integrations/JsonPlaceholder/JsonPlaceholderConnector.php`
+- `app/Http/Integrations/JsonPlaceholder/Requests/GetPostsRequest.php`
+- `app/Http/Integrations/JsonPlaceholder/Requests/CreatePostRequest.php`
+
+You can use these classes right away, and just change the URL, endpoints, or request bodies to match your API.
+
+### 2. Using Your Integration
+
+```php
+use App\Http\Integrations\JsonPlaceholder\JsonPlaceholderConnector;
+use App\Http\Integrations\JsonPlaceholder\Requests\GetPostsRequest;
+use App\Http\Integrations\JsonPlaceholder\Requests\CreatePostRequest;
+
+$connector = new JsonPlaceholderConnector();
+
+// GET /posts
+$response = $connector->send(new GetPostsRequest());
+$data = $response->json();
+
+// POST /posts
+$response = $connector->send(new CreatePostRequest());
+$data = $response->json();
+```
+
+---
+
+For advanced usage, options, and customization, see:
+- **[Integration Stubbing Guide](docs/integration-stubbing.md)**
+- **[Saloon Documentation](https://docs.saloon.dev/)**
 
 ## Credits
 

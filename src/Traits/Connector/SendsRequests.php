@@ -130,7 +130,7 @@ trait SendsRequests
     /**
      * Send a synchronous request and retry if it fails
      *
-     * @param callable(Throwable,Request):bool|null $handleRetry
+     * @param  callable(Throwable,Request):bool|null  $handleRetry
      *
      * @deprecated This will be removed in a future version.
      *
@@ -167,10 +167,10 @@ trait SendsRequests
     /**
      * Create a request pool
      *
-     * @param iterable<PromiseInterface|Request>|callable(Connector): iterable<PromiseInterface|Request> $requests
-     * @param int|callable(int                                                                           $pendingRequests): (int)  $concurrency
-     * @param callable(Response, array-key                                                               $key,              PromiseInterface $poolAggregate): (void)|null  $responseHandler
-     * @param callable(mixed                                                                             $reason,           array-key $key, PromiseInterface $poolAggregate): (void)|null  $exceptionHandler
+     * @param  iterable<PromiseInterface|Request>|callable(Connector): iterable<PromiseInterface|Request>  $requests
+     * @param  int|callable(int                                                                           $pendingRequests): (int)  $concurrency
+     * @param  callable(Response, array-key                                                               $key,              PromiseInterface $poolAggregate): (void)|null  $responseHandler
+     * @param  callable(mixed                                                                             $reason,           array-key $key, PromiseInterface $poolAggregate): (void)|null  $exceptionHandler
      */
     public function pool(
         $requests = [],

@@ -216,8 +216,8 @@ class Response
     /**
      * Get the JSON decoded body of the response as an array or scalar value.
      *
-     * @param  string|int|null $key
-     * @param  mixed           $default
+     * @param  string|int|null  $key
+     * @param  mixed  $default
      * @return mixed
      *
      * @throws \JsonException
@@ -238,8 +238,8 @@ class Response
     /**
      * Alias of json().
      *
-     * @param  string|int|null $key
-     * @param  mixed           $default
+     * @param  string|int|null  $key
+     * @param  mixed  $default
      * @return mixed
      *
      * @throws \JsonException
@@ -252,8 +252,8 @@ class Response
     /**
      * Get the JSON decoded body of the response as an object or scalar value.
      *
-     * @param  string|int|null $key
-     * @param  mixed           $default
+     * @param  string|int|null  $key
+     * @param  mixed  $default
      * @return mixed
      *
      * @throws \JsonException
@@ -316,7 +316,7 @@ class Response
     /**
      * Get the JSON decoded body of the response as a collection.
      *
-     * @param string|int|null $key
+     * @param  string|int|null  $key
      *
      * @throws JsonException|SaletteException
      *
@@ -632,7 +632,7 @@ class Response
     /**
      * Save the body to a file.
      *
-     * @param string|resource $resourceOrPath
+     * @param  string|resource  $resourceOrPath
      */
     public function saveBodyToFile($resourceOrPath, bool $closeResource = true): void
     {
@@ -712,7 +712,7 @@ class Response
     /**
      * Set if a response has been cached or not.
      *
-     * @param  bool $value
+     * @param  bool  $value
      * @return $this
      */
     public function setCached($value): self

@@ -12,8 +12,8 @@ class FixtureHelper
     /**
      * Recursively replaces array attributes
      *
-     * @param  array<string, mixed> $source
-     * @param  array<string, mixed> $rules
+     * @param  array<string, mixed>  $source
+     * @param  array<string, mixed>  $rules
      * @return array<string, mixed>
      */
     public static function recursivelyReplaceAttributes(
@@ -47,7 +47,7 @@ class FixtureHelper
     /**
      * Replace sensitive regex patterns
      *
-     * @param array<string, string> $patterns
+     * @param  array<string, string>  $patterns
      */
     public static function replaceSensitiveRegexPatterns(string $source, array $patterns): string
     {
