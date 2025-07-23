@@ -56,11 +56,19 @@ trait ManagesPsrRequests
             $request = $request->withBody($this->body()->toStream($factories->streamFactory));
         }
 
+        /**
+         * FIX WHEN DEFAULT BODY FROM CONNECTOR IS MERGED WITH REQUEST
+         * Convert the body repository into a stream using the fixed boundary
+         *
+         * This ensures that the boundary used in the Content-Type header
+         * matches the one used in the body itself.
+         *
+         */
         if ($this->body() instanceof MultipartBodyRepository) {
             $boundary = $this->body()->getBoundary();
 
             $request = $request
-                ->withBody($this->body()->toStreamWithFixedBoundary($factories->streamFactory))
+                ->withBody($this->body()->toStream($factories->streamFactory))
                 ->withHeader('Content-Type', 'multipart/form-data; boundary=' . $boundary);
         }
         // Now we'll run our event hooks on both the connector and request which allows the
