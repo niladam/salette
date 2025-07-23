@@ -125,7 +125,8 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     {
         $values = array_values(
             array_filter(
-                $this->all(), static function (MultipartValue $value) use ($key) {
+                $this->all(),
+                static function (MultipartValue $value) use ($key) {
                     return $value->name === $key;
                 }
             )
@@ -150,7 +151,8 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     public function remove(string $key): self
     {
         $values = array_filter(
-            $this->all(), static function (MultipartValue $value) use ($key) {
+            $this->all(),
+            static function (MultipartValue $value) use ($key) {
                 return $value->name !== $key;
             }
         );
@@ -227,5 +229,29 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
         }
 
         return $this->multipartBodyFactory->create($streamFactory, $this->all(), $this->getBoundary());
+    }
+
+    /**
+     * Convert the body repository into a stream using the fixed boundary
+     *
+     * This ensures that the boundary used in the Content-Type header
+     * matches the one used in the body itself.
+     *
+     * @throws BodyException
+     */
+    public function toStreamWithFixedBoundary(StreamFactoryInterface $streamFactory): StreamInterface
+    {
+        if (! isset($this->multipartBodyFactory)) {
+            throw new BodyException(
+                'Unable to create a multipart body stream because the multipart body factory was not set.'
+            );
+        }
+
+        // Use our own boundary instead of letting Guzzle generate a random one
+        return $this->multipartBodyFactory->create(
+            $streamFactory,
+            $this->all(),
+            $this->getBoundary()
+        );
     }
 }
