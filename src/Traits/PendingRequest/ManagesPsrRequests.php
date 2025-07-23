@@ -9,6 +9,7 @@ use Psr\Http\Message\UriInterface;
 use Salette\Contracts\BodyRepository;
 use Salette\Data\FactoryCollection;
 use Salette\Helpers\URLHelper;
+use Salette\Repositories\MultipartBodyRepository;
 
 trait ManagesPsrRequests
 {
@@ -55,6 +56,21 @@ trait ManagesPsrRequests
             $request = $request->withBody($this->body()->toStream($factories->streamFactory));
         }
 
+        /**
+         * FIX WHEN DEFAULT BODY FROM CONNECTOR IS MERGED WITH REQUEST
+         * Convert the body repository into a stream using the fixed boundary
+         *
+         * This ensures that the boundary used in the Content-Type header
+         * matches the one used in the body itself.
+         *
+         */
+        if ($this->body() instanceof MultipartBodyRepository) {
+            $boundary = $this->body()->getBoundary();
+
+            $request = $request
+                ->withBody($this->body()->toStream($factories->streamFactory))
+                ->withHeader('Content-Type', 'multipart/form-data; boundary=' . $boundary);
+        }
         // Now we'll run our event hooks on both the connector and request which allows the
         // user to be able to make any final changes to the PSR request if they need to
         // like modifying the URI or adding extra headers.

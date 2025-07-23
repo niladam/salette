@@ -45,11 +45,17 @@ It organizes your requests into structured classes, centralizing your API logic 
 
 ## Quick Start
 
-### 1. Generate a Working Example
+### 1. Install the package
+
+```shell
+composer require niladam/salette
+```
+
+### 2. Generate a Working Example
 
 The fastest way to get started is to generate a ready-to-use integration:
 
-```bash
+```shell
 php vendor/niladam/salette/examples/create-integration.php
 ```
 
@@ -68,7 +74,7 @@ This will create:
 
 You can use these classes right away, and just change the URL, endpoints, or request bodies to match your API.
 
-### 2. Using Your Integration
+### 3. Using Your Integration
 
 ```php
 use App\Http\Integrations\JsonPlaceholder\JsonPlaceholderConnector;

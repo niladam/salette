@@ -125,7 +125,8 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     {
         $values = array_values(
             array_filter(
-                $this->all(), static function (MultipartValue $value) use ($key) {
+                $this->all(),
+                static function (MultipartValue $value) use ($key) {
                     return $value->name === $key;
                 }
             )
@@ -150,7 +151,8 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
     public function remove(string $key): self
     {
         $values = array_filter(
-            $this->all(), static function (MultipartValue $value) use ($key) {
+            $this->all(),
+            static function (MultipartValue $value) use ($key) {
                 return $value->name !== $key;
             }
         );
@@ -228,4 +230,5 @@ class MultipartBodyRepository implements BodyRepository, MergeableBody
 
         return $this->multipartBodyFactory->create($streamFactory, $this->all(), $this->getBoundary());
     }
+
 }
