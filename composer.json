@@ -4,12 +4,19 @@
     "license": "MIT",
     "authors": [
         {
+            "name": "Sam Carré",
+            "email": "29132017+Sammyjo20@users.noreply.github.com",
+            "role": "Developer"
+        },
+        {
             "name": "Madalin Tache",
-            "email": "niladam@gmail.com"
+            "email": "niladam@gmail.com",
+            "role": "Developer"
         },
         {
             "name": "Catalin Pruna",
-            "email": "prunacatalin.costin@gmail.com"
+            "email": "prunacatalin.costin@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
